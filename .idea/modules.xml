@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GraphFactorisation.iml" filepath="$PROJECT_DIR$/GraphFactorisation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/latex/latex.iml" filepath="$PROJECT_DIR$/latex/latex.iml" />
     </modules>
   </component>
 </project>
