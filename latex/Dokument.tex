@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper,titlepage]{article}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{stmaryrd}
+\usepackage{url}
+\usepackage{longtable}
+\usepackage[figuresright]{rotating}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{geometry}
+\usepackage{pslatex}
+\usepackage{ulem}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{Here}
+\usepackage{color}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\selectlanguage{polish}
+\definecolor{szary}{gray}{0.6}
+\setlength{\textwidth}{400pt}
+\lstset{numbers=left, numberstyle=\tiny, basicstyle=\scriptsize\ttfamily, breaklines=true, captionpos=b, tabsize=2}
+
+\makeindex
+
+\title{Faktoryzacja iloczynu kartezjańskiego grafów }
+\date{30.06.2018}
+\author{Andrzej Kawula \\ Promotor: dr Monika Pilśniak}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Wprowadzenie}
+\section{Wstęp}
+\subsection{Informacje wstępne}
+Produktem kartezjańskim $G_1 \square G_2 $ grafów $G_1 = (V_1 , E_1 ) $ i $ G_2 =(V_2 , E_2 ) $ nazwyamy graf $G = (V, E)$, którrego zbiorem wierzchołków jest iloczyn kartezjański wierzchołków grafów $G_1$ i $G_2$ $(V=V_1 \times V_2 )$, natomiast wierzchołki $(x_1, y_1)$ oraz $(x_2, y_2)$ są połączone w grafie $G$ jeżeli $x_1 = x_2$ oraz $y_1 y_2 \in E_2 $ lub $x_1 x_2 \in E_1 $ oraz $y_1 = y_2 $.\\
+Iloczyn kartezjański grafów jest działaniem łącznym, przemiennym, z dokładnością do izomorfizu, elementem neutralym działania jest graf $K_1$.\\
+Z łączności działania możemy zapisać $G_1 \square G_2 \square ... \square G_k = G$ gdzie $G$ jest produktem kartezjańskim grafów $G_1, G_2, ... , G_k$, a nastepnie poetykietować wierzchołki grafu G $k$-elementową listą $(v_1, v_2 , ... v_k )$ gdzie $v_i \in V(G_i)$ dla $1 \leqslant i \leqslant k $. Jeżeli $v$ etykietowny jest przez listę $(v_1, v_2 , ... v_k )$ możemy zdefiniować rzutowanie $p_i : V \rightarrow V_i $ dla $1 \leqslant i \leqslant k $, które dane jest wzorem $p_i (v) = v_i $, gdzie $v_i$ jest i-tym elemetem listy etykietującej wierzchołek $v$. Wierzchołek $v_i $ będziemy nazywać i-tą współrzędną wierzchołka $v$.  \\
+Jeżeli w grafie $G$ mamy wierzchołek $v$ i rozważymy wierzchołki, które różnią się od wierzchołka $v$ tylko na i-tej pozycji, to podgraf indukownay przez te wierzchołki utowrzy graf izomorficzny  z grafem $G_i$. Podgraf ten będziemy nazywać i-tą warsttwą $G_i$ przechodzącą przez wierzchołek $v$ i oznaczać $G_i ^v$.\\
+Niech $v_0$ będzie wyróżnionym wierzchołkiem w grafie $G$. Warstwy przechodzące przez $v_0$ będziemy nazywać warstwami jednostkowymi. Wierzchołek $v_0$ należy do każej warstwy jednostkowej, natomiast zbiory $V(G_i ^{v_0})$ są parami rozłączne dla $1 \leqslant i \leqslant k $.
+\\
+Tutaj będzie przykład \\
+\\
+\subsection{Kolorowanie produktu iloczynu kartezjańskiego grafów}
+
+\section{Algorytm Faktoryzacji}
+\subsection{Faktoryzacja z dodatkowymi informacjami}
+\subsection{Nadawanie współrzędnych wierzchołkom}
+\subsection{Etykietowanie produktu kartezjańskiego}
+\subsection{Etykietowanie produktu w czasie liniowym}
+\subsection{Sprawdzanie spójnosci kolorowanie właciwego produktu iloczynu kartezjańskiego}
+\subsection{Opis algorytm faktoryzacji}
+\subsection{Wprowadzenie}
+\section{Implementacja Algorytmu}
+\subsection{Wprowadzenie}
+\subsection{Dane wejsciowe}
+\subsection{Opis pakietów i ważniejszych  klas}
+\subsection{Opis algorytm faktoryzacji}
+\end{document}
