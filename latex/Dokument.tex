@@ -62,6 +62,12 @@ $(v_0 , v_1, ... ,v'_i, ..., v_j,...,v_k )$ współrzędne wierzchołka $v_e$ kt
 $(v_0 , v_1, ... ,v_i, ..., v'_j,...,v_k )$ współrzędnymi wierzchołka $v_f$ który jest drugim końcem krawędzi $f$\\
 $v'$ wierzchołek o współrzędnych $(v_0 , v_1, ... ,v_i', ..., v'_j,...,v_k )$\\ 
 Łatwo stwierdzić, że wierzchołek $v'$ jest połączony z wierzchołkiem $v_e$ ponieważ ich współrzędne różnią się tylko na pozycji $j$ oraz w grafie $G_j$ istnieje krawędź $v_j v'_j$ ponieważ w grafie $G$ isnieje krawęź $f$. Analogicznie stwierdzia się istnienie krawędzi $v'v_f$, co w połączeniu z faktem, że krawędzie $e$ oraz $f$ są różnego koloru i rozważaniom na temat kwadratów z przekątnymi daje nam tezę lematu. Co więcej na podstawie powyższego rozumowania, można wnioskowaćy że przeciwległe krawędzie w kwadracie mają ten sam kolor, niezależnie czy kwadrat posiada przekątne czy też nie.
+\subsection{Lemat o izomorfizmie}
+Niech $G=(V, E)$ będzie spójnym grafem, natomiast $E_1 , E_2 , ... , E_k$ podziałem zbioru krawędzi. Niech każda spójna składowa $(V, \cup_{j \neq i}E_j)$ ma dokłdnie jeden punkt współny z każdą spóją skłądową $(V, E_i)$ oraz krawędzie między dwoma składowymi $(V, E_i)$ wyznaczają izomorfizm między tymi składowymi (jeżeli takie krawędzie istnieją). Wtedy:\\
+$G=\Pi G_i $ \\
+gdzie $G_i $ jest dowolną, spójną składową $(V, E_i)$.
+ 
+\subsection{Lemat o udoskonaleniu faktoryzacji iloczynu kartezjańskiego}
 
 \section{Algorytm Faktoryzacji}
 \subsection{Faktoryzacja z dodatkowymi informacjami}
