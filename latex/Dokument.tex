@@ -72,28 +72,40 @@ gdzie $G_i $ jest dowolną, spójną składową $(V, E_i)$.\\
 \textit{Dowód:}\\
 Tutaj chyba dowód indukcyjny ze względy na k, do sprawdzenia. 
 \subsection{Lemat o udoskonaleniu faktoryzacji iloczynu kartezjańskiego}
-
+\newpage
 \section{Algorytm Faktoryzacji}
 \subsection{Faktoryzacja z dodatkowymi informacjami}
 W tym podroździale przedstawimy algorytm kolorowania własciwego grafu względem iloczynu kartezjańskiego. Załóżmy, że mamy dane kolorywszystkich krawędzi wychodzących z pewnego wierzchołka $v_0$. Kolorowanie pozostałych krawędzi będzie odbywało się w kolejnosci przeszukiwania grafu w algorytmie BFS z wierzchołkiem początkowym $v_0$. \\
 \\
-\textit{Twierdzenie 3.1.1 Niech G=$G_1 \square G_2 \square ... \square G_k$ będzie grafem spójnym. Przypusćmy, że dane jest kolorawnie własciwe względem podanego rozkładu dla wszystkich krawędzi wychodzących z pewnego wierzchołka $v_0$. Wtedy  kolorowanie własciwe produktu kartezjańskiego może być uzyskane zgodnie z kolejnoscią algorytmu BFS o wierzchołku początkowym $v_0$. Złożonosć czasowa tego algorytmu to $\mathcal{O}$(mn), natomiast złożonosć pamięciowa $\mathcal{O}(n^2)$}.\\
+\textit{Twierdzenie 3.1.1 Niech G=$G_1 \square G_2 \square ... \square G_k$ będzie grafem spójnym. Dane jest kolorawnie własciwe względem podanego rozkładu dla wszystkich krawędzi wychodzących z pewnego wierzchołka $v_0$. Wtedy  kolorowanie własciwe produktu kartezjańskiego może być uzyskane zgodnie z kolejnoscią algorytmu BFS o wierzchołku początkowym $v_0$. Złożonosć czasowa tego algorytmu to $\mathcal{O}(mn)$, natomiast złożonosć pamięciowa $\mathcal{O}(n^2)$}.\\
 \\
 \textit{Dowód}\\
-Jako dowód przedstawiony zostanie algorytm kolorwania krawędzi. W pierwszym kroku algorytmu dzielimy zbiór wierzchołków grafu $G$ na podzbiory $L_0 , L_1, L_2 , ..., L_r$ w taki sposób, że wierzchołek $v$ należy do zbioru $L_i$ wtedy i tylko wtedy gdy odległoćs wierzchołka $v$ od wierzchołka $v_0$ jest równa $i$. Zbiry te będziemy nazywać warstwami. Następnie dla każdego poziomu od 1 do r tworzymy trzy zbiory- krawędzie dolne, krawędzie poprzeczne oraz krawędzie górne. Definiowanie tych zbirów przebiega następująco. Rozważy poziom $i$, nastęnie dla wszystkich wierzchołków $v$ należących do zbioru $L_i$rozważamy krawędzie $vu$ incydentne z $v$. Wówczas jeżeli $u$ należy do $L_{i-1}$ to krawędź $vu$ będzie krawędzią dolną. Jeżeli $u$ należy do $L_i$ wówczas $uv$ będzie krawędzią poprzeczną, jeżeli natomiast $u$ należy do $L_{i+1}$ wówczas $uv$ będzie krawędzią górną wierzchołka warstwy $L_i$. Zauważmy, że krawędzie dolne warstwy $L_{i+1}$ to ten sam zbiór co krawędzie górne warstwy $L_{i}$ .\\
+Jako dowód przedstawiony zostanie algorytm kolorwania krawędzi. W pierwszym kroku algorytmu dzielimy zbiór wierzchołków grafu $G$ na podzbiory $L_0 , L_1, L_2 , ..., L_r$ w taki sposób, że wierzchołek $v$ należy do zbioru $L_i$ wtedy i tylko wtedy gdy odległoćs wierzchołka $v$ od wierzchołka $v_0$ jest równa $i$. Zbiory te będziemy nazywać poziomami. Następnie dla każdego wierzchołka, wszystkie krawędzie incydentne z tym wierzchołkiem dzielimy na trzy zbiory- zbiór kawędzi dolnych, poprzecznych i górnych. Definiowanie tych zbirów przebiega następująco. Rozważy poziom $i$, nastęnie dla wszystkich wierzchołków $v$ należących do zbioru $L_i$rozważamy krawędzie $vu$ incydentne z $v$. Wówczas jeżeli $u$ należy do $L_{i-1}$ to krawędź $vu$ będzie krawędzią dolną. Jeżeli $u$ należy do $L_i$ wówczas $uv$ będzie krawędzią poprzeczną, jeżeli natomiast $u$ należy do $L_{i+1}$ wówczas $uv$ będzie krawędzią górną wierzchołka warstwy $L_i$. Zauważmy, że krawędzie dolne wierzchołków poziomu $L_{i+1}$ są krawędziami górnymi wierzchołków poziomu $L_{i}$ .\\
 \\
 Nasz algorytm rozpoczynamy od pokolorowania krawędzi poprzeczych $L_1$. Nie stanowi to problemy, ponieważ każdy trójkąt jest monochromatyczny. Tak więc każdej krawędzi $uv$ nadajemy kolor krawędzi $v_0 v$ czyli $c(uv):=c(v v_0 )=c(u v_0 )$.\\
 \\
-Następnie idnukcyjnie kolorujemy krawędzie dolne a następnie poprzeczne warstwy $L_{i+1}$ mając już pokolorowane krawędzie dolne i poprzeczne warstwy $L_i$. Nie ma potrzeby kolorowania krawędzi górnych warstwy $L_i$ ponieważ zbiór ten jest również zbiorem krawędzi dolnych warstwy $L_{i+1}$.\\
+Następnie idnukcyjnie kolorujemy krawędzie dolne a następnie poprzeczne $L_{i+1}$ mając już pokolorowane krawędzie dolne i poprzeczne $L_i$. Nie ma potrzeby kolorowania krawędzi górnych $L_i$ ponieważ zbiór ten jest również zbiorem krawędzi dolnych $L_{i+1}$.\\
 \\
-Zaczynamy od krawędzi dolych. Przeglądamy wierzchołki należące do $L_{i+1}$ zgodnie z kolejnoscią wyznaczoną przez algorytm BFS. Niech dany będzie wierzchołek $u$ oraz krawędź $uv$. Ponieważ wierzchołek v należy do $L_i$, gdzie $i\geqslant 1$ to istnieje wierzchołek $w$ należący do $L_{i-1}$ incydentny z $v$. Rozważmy dwa przypadki:
+Zaczynamy od krawędzi dolych. Przeglądamy wierzchołki należące do $L_{i+1}$ zgodnie z kolejnoscią wyznaczoną przez algorytm BFS. Niech dany będzie wierzchołek $u$ oraz krawędź $uv$. Ponieważ wierzchołek v należy do $L_i$, gdzie $i\geqslant 1$ to istnieje wierzchołek $w$ należący do $L_{i-1}$ sąsiedni z $v$. Rozważmy dwa przypadki:
 \begin{enumerate}
 \item Nie istnieje wspólny sąsiad wierzchołków $u$ oraz $w$ różny od $v$. Wówczas nie istnieje kwadrat zawierający wierzchołki $u$ oraz $w$ a co za tym idzie kolory krawędzi $uv$ oraz $vw$ są te same czyli $c(uv):=c(vw)$.
 \item Istnieje wspólny sąsiad $x$ wierzchołków $u$ oraz $w$ różny od $v$. W tym przypadku $c(uv):=c(xw)$ oraz $c(ux):=c(vw)$. 
 \end{enumerate}
 Uzasadnienia w obydwu przypadkach wynikają z lematu o kwadracie (2.3).\\
-Rozważmy teraz krawędzie poprzeczne warstwy $L_{i+1}$. W tym celu również przeglądamy wierzchołki należące do tej warstwy. Dla każdej krawędzi $uv$ należącej do krawędzi poprzecznych rozważaniej warstwy szukamy krawędzi dolnej $uw$ i podobnie jak dla krawędzi dolych szukamy wspólnego sąsiada wierzchołków $v$ oraz $w$. Jesli takowy wierzchołek $x$ instnieje wówczas $c(uv):=c(wx)$, jesli nie $c(uv):=c(uw)$.
+Rozważmy teraz krawędzie poprzeczne $L_{i+1}$. W tym celu również przeglądamy wierzchołki należące do tego poziomu. Dla każdej krawędzi $uv$ należącej do krawędzi poprzecznych rozważanego poziomu szukamy krawędzi dolnej $uw$ i podobnie jak dla krawędzi dolych szukamy wspólnego sąsiada wierzchołków $v$ oraz $w$. Jesli takowy wierzchołek $x$ instnieje wówczas $c(uv):=c(wx)$, jesli nie $c(uv):=c(uw)$.\\
+Zauważmy, że aby wyznaczyć $G_i$ wystarczy znaleźć $G_i ^{v_0}$. Wierzchołek $v$ należy do $V(G_i ^{v_0})$ wtedy i tylko wtedy gdy wszyskie jego krawędzie dolne są koloru $i$. Tak więc aby wyznaczyć $G_i$ wystarczy przejrzeć wszystkie krawędzie dolne wszystkich wierzchołków, jeżeli lista ta jest monochromatyczna wierzchołek ten będzie należał do $V(G_i ^{v_0})$ gdzie $i$ to kolor krawędzi dolych tego wierzchołka.\\
+W rozdziale 2.1 zdefiniowalimy warstwy jednostkowe $G_i ^{v_0}$. Wierzchołki należące do $G_i ^{v_0}$ będziemy nazywać wierzchołkami warstwy jednostkowej. Oczywiscie wszystkie wierzchołki należące do $L_1$ będą wierzchołkami warstw jednostkowych.\\
+Rozważając jeszcze raz krawędzie dolne oraz poprzeczne wierzchołków warstw jednostkowych, na podstawie spójnosci produktu iloczynu kartezjańsiego stwierdzamy, że i krawędzie dolne i krawędzie górne tychże wierzchołków należą do warst jednostkowych.
+\\
+Na koniec pozostaje nam wykazanie, że nasz algorytm rzeczywiscie spełnia założenia dotyczące złożonosci pamięcowej i czasowej. Zauważmy że dla każdego wierzchołka należącego do $L_i$, gdzie $i>0$ szukamy dolnego sąsiada, następnie przeglądamy wszystkie krawędzie dolne oraz poprzeczne. Tak więc wykonujemy co najwyżej $2m$ kroków w naszym algorytmie, gdzie $m$ oznacza liczbę krawędzi naszego grafu $G$. Dla ustalonych krawędzi $uv$ oraz $uw$ szukamy wspólnego sąsiada $x$. Mamy co najwyżej $n=G(V)$ możliwosci wyboru tego sąsiada. Jeżeli informacje o krawędziach grafu są przetrzymywane w tablicy sąsiedztwa sprawdzenie czy dany wierzchołek jest sąsiadem innego można wykonać w czasie stałym. Tak więc dowiedlimy, że złożonosć czasowa algorytmu to $\mathcal{O}(mn)$, natomiast złożonosć pamięciowa $\mathcal{O}(n^2)$.\\
 \subsection{Nadawanie współrzędnych wierzchołkom}
+W poprzednim podroździale opisalismy algorytm kolorowania krawędzi, jednakże nie podawalismy spospobu, jak nadać współrzędne wierzchołkom. Zdefinukemy teraz algoytm, który nada współrzędne naszym wierzchołkom, mająć już dane kolory wszystkich krawędzi.\\
+\\
+\textit{Twierdzenie 3.2.1 Niech G=$G_1 \square G_2 \square ... \square G_k$ będzie grafem spójnym. Dane jest również kolorawnie własciwe produktu względem podanego rozkłądu. Algorytm nadania współrzędnych wierzchołkom może być zrealizowany w złożonosci czasowej i pamięciowej $\mathcal{O}(mn)$.}\\
+\\
+\textit{Dowód}\\
+Dla każdego wierzchołka, aby móc przechować informację o jego współrzędnych, potrzebujemy $k$-elementowej tablicy. Ponieważ $k$ jest mniejsze od minimalnego stopnia grafu oraz $\delta(G)  \cdot n \leqslant m$ to całkowity rozmiar tablic ze wszpółrzędnymi jest mniejszy bądź równy $\mathcal{O}(m)$.
+
 \subsection{Etykietowanie produktu kartezjańskiego}
 \subsection{Etykietowanie produktu w czasie liniowym}
 \subsection{Sprawdzanie spójnosci kolorowanie właciwego produktu iloczynu kartezjańskiego}
