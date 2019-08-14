@@ -110,8 +110,7 @@ Dla każdego wierzchołka, aby móc przechować informację o jego współrzędn
 Algorytm rozpoczynamy od nadania wierzchołkowi $v_0$ współrzędnych składających się z samych 0. Następnie przeszukujemy wszystkie wierzchołki zgodnie z kolejnością algorytmu BFS. \\Jeżeli wierzchołek należy do $i$-tej warstwy jednostkowej jego wszystkie współrzędne otrzymują wartość 0 z wyłączeniem $i$-tej współrzędnej. Przeszukując wierzchołki $i$-tej warstwy jednostkowej $i$-tej współrzędnej nadajemy kolejną liczbę naturalną. Zapisując formalnie jeżeli nasz wierzchołek $u$ należy do warstwy jednostkowej $u_j =0$ dla $j \neq i$
 oraz $u_i = max\{v_i\}+1$ gdzie $v_i $ to $i$-te współrzędne wierzchołków należących do $G_i$ odwiedzonych wcześniej niż wierzchołek $u$ w algorytmie BFS. 
 Jeżeli natomiast wierzchołek nie należy do warstwy jednostkowej to istnieją co najmniej dwie krawędzie dolne tego wierzchołka, mające różne kolory. Niech tym wierzchołkiem będzie $u$ natomiast jego krawędziami dolnymi $uv$ oraz $uw$. Wówczas $u_i = max(v_i , w_i )$ dla $1 \leqslant i \leqslant k$.
-
-
+\newpage
 \section{Etykietowanie produktu kartezjańskiego}
 W tym rozdziale rozszerzymy definicję kolorowania i nazwiemy ją etykietowaniem. Wszystkie krawędzie, rzutowane na tę samą krawędź otrzymają tę samą etykietę. Pokażemy, że produkt może być poetykietowany, a co za tym idzie pokolorowany w czasie liniowym. Etykietowanie pozwoli nam na określenie pozycji danej krawędzi w stosunku do faktoryzacji iloczynu kartezjańskiego grafu w czasie stałym. W rozdziale tym opiszemy struktury danych niezbędne do etykietowania krawędzi. Właściwie etykietowanie okaże się pozycją krawędzi w tablicy krawędzi wychodzących z danego wierzchołka o tym samym kolorze. \\
 \subsection{Struktury Danych}
@@ -141,13 +140,81 @@ Jeżeli wspólny sąsiad nie istnieje, wówczas $c(uv):=c(vx)$. Pozostałe kraw�
 Teraz rozważmy sytuację, w której znalezlismy wspólnego sąsiada, którym jest wierzchołek $w$, jednakże tym razem kolory krawędzi $wx$ oraz $wx$ są takie same. Wówczas $uv$ oraz $uv$ również mają ten sam kolor. Jeżeli wszystkie pozostałe krawędzie dolne wierzchołka $v$ mają ten sam kolor wówczas wierzchołek $u$ należy do warstwy jednostkowej i postępujemy analogcznie jak w przypadku 2a. Tak więc niech istnieje krawędź $vx'$, której kolor różni się od koloru $vx$ a co za tym idzie również od $uv$. Tak więc musi istnieć wspólny sąsiad wierzchołków $u$ oraz $x'$ różny od $v$, nazwijmy go $w'$. Znalezienie takiego sąsiada może być wykonane w czasie $O(d(u))$. Dalej postępujemy jak w przypadku 2b a naszym kawdratem bazowym będzie $uvx'w'$.
 \end{enumerate} 
 \item
-Etykietowanie pozostałych krawędzi dolnych odbywa się z udziałem zanlenionego wczesniej kwadratu bazowego. Załóżmy dla jasnosci sytuacji, że kwadrat ten składa się z wierzchołków $u,v,x$ oraz $w$. Tak więc iterujemy po wszystkich krawędziach dolnych wierzchołka $u$. Niech $uy$ będzie kolejną taką krawędzią. Dalej niech $yz$ będzie dolną krawędzią wierzchołka $y$, taką, że $l(yz)=l(uv)$. Jeżeli okaże się że taka krawędź nie istnieje wówczas suzkamy krawędzi $yz$ takiej, że $l(yz)=l(uw)$. Dla każdego wierzchołka taka operacja jest wykonywana w czasie stałym, a dla wszystkich krawędzi sumarycznie czas potrzebny do poetykietowania krawędzi dolych jest równy $O(d(u))$. Tak więc etykietowanie wszystkich krawędzi dolych należących do warstwy $L_{i+1}$ może być wykonane w czasie $O(\sum_{u \in L_{i+1}}d(u))$.\\
+Etykietowanie pozostałych krawędzi dolnych odbywa się z udziałem znalezionego wczesniej kwadratu bazowego. Załóżmy dla jasnosci sytuacji, że kwadrat ten składa się z wierzchołków $u,v,x$ oraz $w$. Tak więc iterujemy po wszystkich krawędziach dolnych wierzchołka $u$. Niech $uy$ będzie kolejną taką krawędzią. Dalej niech $yz$ będzie dolną krawędzią wierzchołka $y$, taką, że $l(yz)=l(uv)$. Jeżeli okaże się że taka krawędź nie istnieje wówczas suzkamy krawędzi $yz$ takiej, że $l(yz)=l(uw)$. Dla każdego wierzchołka taka operacja jest wykonywana w czasie stałym, a dla wszystkich krawędzi sumarycznie czas potrzebny do poetykietowania krawędzi dolych jest równy $O(d(u))$. Tak więc etykietowanie wszystkich krawędzi dolych należących do warstwy $L_{i+1}$ może być wykonane w czasie $O(\sum_{u \in L_{i+1}}d(u))$.\\
 Etykietowanie krawędzi górnych oraz poprzecznych przebiega w analogiczny sposób, co również implikuje taką samą złożonosć całej operacji.\\
 \end{enumerate}
 
 \subsection{Etykietowanie produktu w czasie liniowym}
-\subsection{Sprawdzanie spójnosci kolorowanie właciwego produktu iloczynu kartezjańskiego}
-\section{Opis algorytmu faktoryzacji}
+Dotychczas do sprawdzeia czy dwa wierzchołki są połączone używalismy macierzy sądsiedztwa, co wymagało od nas użycia $n^2$ pamięci, gdzie $n$ oznacza liczbę wierzchołków. Zaburza to nasze założenie o liniowej złożonosci pamięciowej naszego algorytmu, co więcej inicjalizacja tej macierzy również może zaburzyć naszą złożonosć czasową. Na szczęcie w każdym kroku naszego algorytmu potrzebujemy co najwyżej jednego wiersza z naszej tabeli sąsiedztwa, co powoduje, że nasza założona złożonosć pamięciowa w łatwy sposób może być osiągnięta. Można również inicjalizację takiej macierzy sąsiedztwa wykonać w czasie $O(m)$ zamiast $O(n^2)$ (TUTAJ ALBO ODNIESIENIE DO ARTYKUŁU ALBO OPIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!).\\
+Wykorzystując tę metodę, do tworzenia wiersza tablicy sąsiedztwa, zauważmy na początek, że czas potrzebny do stworzenia takiego wiersza dla wierzchołka $x$ jest proporcjonalny do $d(x)$. A ponieważ $\sum_{v \in V(G)}d(v) = 2m$ to złożonosć czasowa potrzebna na wykonanie się algorytmu nie zmieni się, dopóki nie będziemy wykonywać naszej operacji więcej niż stałą ilosć razy dla poszczególnych wierzchołków. Tak więc w tym rozdzialne opiszemy jak wykonać nasz algorytm tak, aby nasze założenie zostało wykonane, co pozwoli nam na utrzymanie złożonosci czasowej, przy jednoczesnym zmniejszeniu złożonosci pamięciowej.\\
+\\
+\textit{\textbf{Twierdzenie} Niech G=$G_1 \square G_2 \square ... \square G_k$ będzie grafem spójnym. Dane jest również kolorowanie właściwe produktu względem podanego rozkładu dla krawędzi wychodzących z wierzchołka $v_0$. Złożonosć czasowa i pamięciowa tego algorytmu wynosi O(m)}.\\
+\\
+\textit{\textbf{Dowód}}\\ 
+W rozdziale 4.2 opisalismy liniowy, jeżeli chodzi o złożonosć czasową algorytm, tutaj opiszemy jak go zmodyfikować aby i złożonosć pamięciowa była liniowa. Opiszemy modyfikację trzech kroków z poprzedniego rozdziału.\\
+\begin{enumerate}
+\item 
+Jeżeli chodzi o etykietowanie krawędzi dolnych wierzchołków posiadajacych jedną krawędź dolną procedura się nie zmienia.
+\item
+Poszukiwanie kwadrtaru bazowego. Możliwe, że będą konieczne dwa przebiegi poszukiwań naszego kwadratu bazowego. W pierwszym przebiegu wierzchołek $v$ jest dolnym wierzchołkiem $u$, gdzie $u \in L_{i+1}$ natomiast $x$ jest dolnym wierzchołkiem $v$. Teraz szukamy pozostałych wierzchołków $u'$ należących do warstwy $L_{i+1}$, dla których odległosć od wierzchołka $x$ również wynosi 2. Dopiero wtedy będziemy tworzyć wiersz macierzy sąsiedztwa wierzchołka $x$. W drugim przebiegu rozumowanie jest analogiczne. \\
+\item
+W tym fragmencie konieczne będzie tworzenie wiersza macierzy sąsiedztwa maksymalnie dwa razy, tym razem jednak dla wierzchołków należących do warstwy $L_i$, a nie jak to było w punkcie 2 dla warstwy $L_{i-1}$.
+\end{enumerate}
+Dla krawędzi górnych i poprzeczych procedura wygląda analogicznie (możliwe, że konieczne będą po dwa przebiegi kroku algorytmu). Tak więc podczas indukcyjnego kroku dla warstwy $L_{i+1}$ maksymalnie 4 razy szukamy wiersza macierzy sąsiedztwa dla wierzchołków warstw $L_{i} $ oraz $L_{i-1}$ co oznacza, że dla danego wierzchołka, jego wiersz z macierzy sąsiedztwa będzie wyszukiwany nie więcej niż 8 razy, co należało dowieźć. \\
+
+Ponieważ etykietowanie jest rozszerzeniem kolorowania, nadanie współrzędnym wierzchołkom grafu $G$ może być wykonane przez algorytm opisany w rozdziale 3.2.\\
+\newpage
+\section{Sprawdzanie spójnosci}
+Poprzednie rozdziały opierały się na założeniom, że graf podany na wejsciu jest produktem iloczynu kartezjańskiego oraz znamy kolory krawędzi incydentych z pewnym wierzchołkiem. Odwróćmy teraz trochę sytuację i załóżmy, że mamy dane kolory pewnych krawędzi wychodzących z danego wierzchołka a naszym zadaniem będzie sprawdzenie, czy to algorytm etykietowania spowoduje, że nasze kolorowanie będzie kolorowaniem właciwym produktu iloczynu kartezjańskiego. Może się okazać, że sprawdzenie koloru krawędzi dla sąsiednich wierzchołków lub przykładowo brak kwadratu bazowego dla pewnego wierzchołka da nam negatywną odpowiedź na nasze pytanie. Jednakże, jak się okaże za chwilę, możliwe jest kontynuowanie procedury etykietowania, nawet w przypadku, gdy podczas szukania kwadratu bazowego brakuje nam krawędzi lub wierzchołka.\\
+Tak więc potrzebujemy efektywnego narzędzia do sprawdzania spójnosci założeń. Do tego celu wykorzystywać będziemy lemat o izomorfiźmie.\\
+Izomorfizm grafów jest bijekcją na zbiorach wierzchołków zachowującą sąsiedztwo. Korzystając z kolejnosci wierzchołków grafu uzyskaną w algorytmie BFS, będziemy indukcyjnie sprawdzać czy dla danego poziomu $L_i$ nasze założenia są spełnione i dalej kontunować sprawdzenie dla następnych poziomów. \\
+\\
+\textit{\textbf{Twierdzenie} Zalóżmy, że własnosci izomorfizmu są zachowane dla wierzchołków warstw $L_1$ do $L_i$. Sprawdzenie czy własnosci izomorfizmu dla wierzchołków należących do warstwy $L_{i+1}$ może być wykonane w czasie proporcjonalnym do sumy ilosci krawędzi dolych i poprzeczych warstwy $L_{i+1}$ oraz krawędzi górnych $L_{i}$.} \\
+\\
+\textit{\textbf{Dowód}}\\
+Nasze sprawdzenie będzie się odbywało w dwóch krokach.\\
+\begin{enumerate}
+\item
+Dla każdego wierzchołka $u$ należącegodo $L_{i+1}$, który nie jest wierzchołkiem warstwy jednostkowej wybieramy dwie krawędzie dolne różnych kolorów $uv$ oraz $uw$ (można wybrać krawędzie należące do kwadratu bazowego) i sprawdzamy czy krawędzie dolne/poprzeczne wierzchołka $u$ mają odpowienika wsród krawędzi dolnych/poprzeczych wierzchołka $v$. Uscislając, dla każdej krawędzi dolnej/poprzecznej $uz$ koloru różnego od $c(uv)$ istnieje dokładnie jedna krawędź dolna/poprzeczna $vz'$ taka, że $l(uz)=l(vz')$ i vice versa. Co więcej $l(uv)=l(zz')$.
+\item
+Dla krawędzi górnych należących do $L_i$ postępujemy analogicznie. Iterujemy po wszystkich wierzchołkach. Jeżeli $u$ nie należy do warstwy jednostkowej wybieramy kwadrat bazowy $uvxw$ i dla wszystkich krawędzi górnych wierzchołka $u$ porównujemy je z krawędziami $uv$ lub $uw$ w zależnosci od koloru.\\
+Jeżeli $u$ należy do warstwy jednostkowej, załóżmy $G^{v_0}_i$, wybieramy jeden wierzchołek $v$, będący dolnym sąsiadem $u$. Porównujemy wówczas krawędzie górne wierzchołków $u$ oraz $v$ o kolorach różnych od $i$. 
+\end{enumerate}
+
+Ponieważ sprawdzenie, czy istnieje odpowiadająca krawędź, odkąd mamy posortowane listy monochromatyczne, może być wynonane w czasie stałym, czas potrzebny do znalezenia odpowiadających krawędzi jest dla danego wierzchołka $u$ jest proporcjonalny do $d(u)$ a co za tym idzie sumaryczna ilosć czasu jest proporcjonalna do rozmiaru grafu. Żadne dodatkowe struktury danych nie są potrzebne. \\
+Tak więc sprawdzanie izomorfizmów między warstwami może być wykonane w zadowalającej nas złożonosci czasowej i pamięciowej. Aby wykazać, że jest to produkt iloczynu kartezjańskiego potrzeba jeszcze sprawdzić pozostałe założenia lematu o izomorfizmie. Rozważmy wierzchołek $a$ będący dolnym sąsiadem $u$, takim że $c(ua) \neq c(uv)$. Będziemy teraz rozważać izomorfizm między $G^u_i$ oraz $G^a_i$ indukowany między krawędziami między nimi występującymi dla $i \neq c(uv)$.\\
+Naszym zadaniem jest pokazanie, że dla każdej krawędzi dolnej lub poprzecznej $ab$, takiej że $c(ab) \neq c(ua)$ istnieje dokładnie jedna krawędź $uc$, taka że $l(uc)=l(ab)$ oraz wierzchołki $b$ i $c$ są połączone oraz $l(ua)=l(bc)$. Oczywiscie do tego musimy pokazać również że dla każdej dolnej lub poprzecznej krawędzi $uc$ istnieje krawędź $ab$ spełniająca te same założenia.\\
+Rozważmy pierwszy przypadek. We wczeniejszych rozważaniach w tym rozdziale wykazalismy istnienie krawędzi $aa'$, takiej że $l(uv)=l(aa')$. Z założenia idnukcyjnego wiemy, że izomormizmy są zachowane dla poziomów od $L_1$ do $L_i$. Skorzystamy teraz ponownie z lamatu o kwadracie. Rozważając wierzchołki $a,b,a'$ w stałum czasie możemy znaleźć kwadrat $abb'a'$. Idąc dalej rozważamy wierzchołki $v,a',b'$ i również w czasie stałym możemy znaleźć kwadrat $va'b'c'$. Na koniec wystarczy rozważyć wierzchołki $b,b'c'$ i tak jak poprzednio w czasie stałym znajdujemy kwadrat $bb'c'c$. Krawędź $vc'$ posiada taką samą etykietę jak $ab$ oraz $cc'$ posiada taką samą etykietę jak $uv$. A ponieważ izomorfizm między wierzchołkami $v$ oraz $u$ został sprawdzony, wierzchołki $u$ oraz $c$ są połączone oraz etkykiety $uc$ i $vc'$ są takie same, a co za tym idzie również etykieta $ab$ jest taka sama, udowodnilismy zakładaną tezę. Dowód w drugą stronę przebiega analogicznie.\\
+Pozostaje jeszcze sprawdzenie czy złożonosć czasowa i pamięciowa nie uległy pogorszeniu. Zaczynając od złożonosci pamięciowej, widzimy, że nie używamy żadnych dodatkowych, złożoych struktur danych. Co do złożonosci czasowej, zauważmy że sprawdzenie izomorfizmu dla danej krawędzi odbywa się w czasie stałym. Szukanie kwadratów opiera się na korzystaniu z już posortowanych monochromatycznych list, więc dostęp do nich odbywa się w czasie stałym. Tak więc sumaryczna złożonosć czasowa sprawdzania spójnosci może być wykonana w czasie proporcjonalnym do rozmiaru grafu.\\
+\newpage
+
+\section{Faktoryzacja poprzez łączenie kolorów}
+W tym rozdziale opiszemy wszystkie konieczne narzędzia potrzebne do fakotryzacji spójnego gragu $G$ na grafy proste, czyli takie które nie da się opisać jako iloczyn dwóch nietrywialnych grafów (przez graf trywialny rozumiemy graf $K_1$). Z lematu o udoskonaleniu chcemy znaleźć końcowy rozkład podanego na wejciu grafu $G$. Przez znalezienie rozkładu rozumiemy znalezienie finalnego kolorowania własciwego produtu iloczynu kartezjańskiego. Ma to być kolorowanie zachowujące izomorfizmy między warstwami tego samego koloru.\\
+\\
+\textit{\textbf{Twierdzenie} Faktoryzacja prosta grafu spójnego może być wykonana w czasie liiowym i w takiej samej złożonosci pamięciowej}\\
+\\
+\textit{\textbf{Dowód:}} Jako dowód zaprezentujemy algorytm. Ideą naszego rozmumowania będzie rozpoczęcie algorytmu ze wskazanym kolorowaniem początkowym krawędzi wychodzących z wierzchołka o minimalnym stopniu. Kolorowanie to nie będzie jeszcze tym, które będzie wskazywać na kolorwanie własciwe finalnego produktu kartezjańskiego, lecz w trakcie działania algorymu będziemy łączyć dwa kolry w jeden jeżeli zajdzie taka koniecznosć. \\
+Nasz algorytm w pierwszym kroku nadaje różne kolory wszystkim krawędzią wychodzącym z wierzchołka $v_0$, który to jest wierzhołkiem o minimalym stopniu w naszym graie wejsciowym. Ponieważ każdy wierzchołek posiada krawędzie incydentne każdego koloru wiemy, że w naszym kolorowaniu finalnym nie będzie więcej kolorów. Użycie wierzchołka o minimalnym stropniu sprawia również, że nasza początkowa tablica kolorów ma możliwie najmniejszy rozmiar, a co bardziej istotne jej wielkosć jest stałą. \\
+Na początek uruchamiamy algorytm BFS z wierzchołkiem początkowym $v_0$, dzielimy wierzchołki na warstwy a krawędzie na krawędzie dolne, poprzeczne i górne. Następnie dla każdej warstwy wykonujemy etykietowanie a następnie sprawdzamy spójnosć. Może się okazać, że nasza procedura wykona się bez błędów i w taki oto sposób otrzymamy nasze kolorawnie końcowe produktu iloczynu kartezjańskiego, a co za tym idzie rozkład naszego grafu wyjciowego na iloczyn grafów prostych.\\
+Bardziej prawdoodobne jest jednak, że etykietowanie lub sprawdzanie spójnosci nie wykona się poprawnie. Dla przykładu, będziemy kolorować krawędzie poprzeczne warstwy $L_1$, widzimy wówczas, że nie jestesmy w stanie pokolorwać w takiej krawędzi (patrz lemat o trójkącie). Oznacza to po prostu, że nasze kolorwanie początkowe krawędzi wychodzących z $v_0$ jest niewłasciwe, użylimy zbyt dużej ilosci kolorów. Wówczas procedura jest prosta- łączymy kolory krawędzi incydentych z naszą krawędzią poprzeczną w jeden i wówczas możemy ją już pokolorować bez problemu. Cała idea naszego algorytmu opiera się na tym koncepie: poetykietuj krawędzie i sprawdź spójnosć- jeżeli jest to niemożliwe- połącz kolory. \\
+Jak się okazuje nie ma koniecznosci rekolorowania krawędzi jeżeli już zostały pomalowane wczesniej, wystarczy tylko zanotować fakt, że dany kolor został połączony z innym. Ponieważ $d(v_0)^2  \leqslant d(v_0)n \leqslant 2m $ nie ma koniecznosci przetrzymywać danych o kolororach w żadnych skomplikowanych strukturach danych. Dodatkowo wiemy, że w finalnym kolorowniu użyty będzie co najmniej jeden kolor, to operacji łączenia kolorów będzie również co najwyżej $d(v_0)$ co również nie zaburzy złożonosci czasowej naszego algorytmu.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Implementacja Algorytmu}
 \subsection{Wprowadzenie}
 \subsection{Dane wejsciowe}
