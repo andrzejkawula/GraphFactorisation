@@ -140,34 +140,68 @@ graph, cartesian product of graphs, factoring cartesian product of graphs, memor
 labelling, consistency check, colors merging.
 \newpage
 \tableofcontents
-\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 \newpage
-\section{Wstęp}
+\section{Wprowadzenie}
 
 Inspiracją oraz głównym źródłem wykorzystywanym w niniejszej pracy magisterskiej jest artykuł Wilfrieda Imricha oraz Iztoka Peterina z 2007 roku pod tytułem $"$Recognizing Cartesian product in linear time$"$ ~\cite{MAIN}. \\
 
-Iloczyn kartezjański jest powszechny w teorii grafów. Ma on szczególne własności algebraiczne, strukturalne i metryczne. Najbardziej znanymi przykładami są hiperkostki, grafy Hamminga czy kraty. Hiperkostki to potęgi grafu $K_2$, grafy Hamminga to iloczyn grafów pełnych natomiast kraty to iloczyn ścieżek. Iloczyn kartezjański jak i izomorficzne podgrafy tegoż iloczynu mają wiele zastosowań w informatyce, chemii czy biologii.\\
-\tab[0.6cm]Jeżeli chodzi o prace nad produktem kartezjańskim na początek trzeba wspomnieć o publikacjach Sabidussiego ~\cite{SAB} oraz Wisinga ~\cite{VIS} z lat '60 ubiegłego stulecia. Część rozważań dotyczyła możliwości rozłożenia danego grafu na iloczyn grafów prostych, gdzie grafem prostym nazywamy graf, który nie jest iloczynem kartezjańskim dwóch innych grafów nietrywialnych (czyli posiadających więcej niż jeden wierzchołek). Niezależnie Sabidussi oraz Wising udowodnili, że każdy graf spójny posiada unikalny rozkład na iloczyn grafów prostych z dokładnością do kolejności oraz izomorfizmu czynników. Dla grafów niespójnych faktoryzacja grafów może być niejednoznaczna.\\
+Iloczyn kartezjański jest powszechny w teorii grafów. Najbardziej znanymi przykładami są hiperkostki, grafy Hamminga czy kraty. Hiperkostki to potęgi grafu $K_2$, grafy Hamminga to iloczyn grafów pełnych natomiast kraty to iloczyn ścieżek. Produkt iloczynu kartezjańskiego jak i izomorficzne podgrafy tegoż produktu mają wiele zastosowań w informatyce, chemii czy biologii.\\
+\tab[0.6cm]Produkt kartezjański ma również szczególne własności algebraiczne, strukturalne i metryczne. Jeżeli chodzi o prace nad produktem kartezjańskim na początek trzeba wspomnieć o publikacjach Sabidussiego ~\cite{SAB} oraz Wisinga ~\cite{VIS} z lat '60 ubiegłego stulecia. Część rozważań dotyczyła możliwości rozłożenia danego grafu na iloczyn grafów prostych, gdzie grafem prostym nazywamy graf, który nie jest iloczynem kartezjańskim dwóch innych grafów nietrywialnych (czyli posiadających więcej niż jeden wierzchołek). Niezależnie Sabidussi oraz Vising udowodnili, że każdy graf spójny posiada unikalny rozkład na iloczyn grafów prostych z dokładnością do kolejności oraz izomorfizmu czynników. Dla grafów niespójnych faktoryzacja grafów może być niejednoznaczna.\\
 \tab[0.6cm]Jeżeli chodzi o dalsze prace nad iloczynem kartezjańskim grafów, w latach '70 powstało pytanie, czy istnieje wielomianowy algorytm, pozwalający na faktoryzację grafu spójnego na czynniki pierwsze. Pierwszy dowód tego faktu powstał w 1985 roku, kiedy to Feigenbaum ~\cite{FEI} opisał algorytm o złożoności czasowej $\mathcal{O} (n^{4.5})$, gdzie $n$ oznacza liczbę wierzchołków w grafie, będącym produktem iloczynu kartezjańskiego. Winkler ~\cite{WIN} niezależnie skonstruował zupełnie inny algorytm o złożoności $\mathcal{O} (n^{4})$, a następnie Feder ~\cite{FED} algorytm o złożoności czasowej $\mathcal{O} (nm)$ oraz pamięciowej $\mathcal{O} (m)$. Następnie Aurenhammer ~\cite{AUR} zmodyfikował jeszcze ten algorytm, dzięki czemu złożoność czasowa spadała do $\mathcal{O} (m\cdot log (n))$.\\
-\\
-\tab[0.6cm]Algorytm zaprezentowany w niniejszej pracy jest liniowy zarówno jeżeli chodzi o złożoność czasową jak i pamięciową. Tak więc osiągamy najmniejszą możliwą złożoność do osiągnięcią. Jest on również łatwiejszy jeżeli chodzi o samą koncepcję od przedstawionych powyżej. Polega on na podziale zbioru krawędzi grafu wejściowego na zbiory reprezentujące czynniki proste, będące elementami iloczynu kartezjańskiego. Ten podział krawędzi jest nieodłączną własnością metryczną naszego wejściowego grafu. Wystarczy znaleźć ten podział, nie ma potrzeby tworzenia dodatkowych struktur, wystarczy rozszerzyć podstawowe. Nie trzeba także dokonywać dekompozycji naszego grafu wejściowego w czasie działania algorytmu. \\
-
-Praca została podzielona na kilka rozdziałów. Pierwszy, jak można było przeczytać zaiwera informacje o historii prac nad problemem faktoryzacji iloczynu kartezjańskiego grafów. Drugi opsiuje podstawowe pojęcia z teorii grafów, terminologię związaną z iloczynem kartezjańskim grafów, jak i twierdzenia wykorzystywane w kolejnych rozdziałach. Trzeci rozdział przedstawia algorytm kolorowania krawędzi, który posłuży nam następnie do faktoryzacji iloczynu kartezjańskiego. Następny rozdział rozszerza kolorowanie przedstawione w poprzednim rozdziale, zwane dalej etykietowaniem krawędzi. Piąty rozdział przedstawia kompletny algorytm faktoryzacji iloczynu kartezjańskiego grafów, wykorzystujący po za wspomnianym wcześniej etykietowaniem, procedurę łączenia kolorów. Ostatni rozdział to podsumanie prac. \\
-
+Algorytm zaprezentowany w niniejszej pracy jest liniowy zarówno jeżeli chodzi o złożoność czasową jak i pamięciową. Jest on również łatwiejszy jeżeli chodzi o samą koncepcję od przedstawionych powyżej. Polega on na podziale zbioru krawędzi grafu wejściowego na zbiory reprezentujące czynniki proste, będące elementami iloczynu kartezjańskiego. Ten podział krawędzi jest nieodłączną własnością metryczną naszego wejściowego grafu. Wystarczy znaleźć ten podział, nie ma potrzeby tworzenia dodatkowych struktur, wystarczy rozszerzyć podstawowe. Nie trzeba także dokonywać dekompozycji naszego grafu wejściowego w czasie działania algorytmu. Nie ma również potrzeby nadawać współrzędnych wierzchołkom, tak aby mieć dostęp do nich w trakcie trwania procedury. Można to osiągnąć po skończeniu algorytmu. \\
+Idea działania algorytmu jest prosta. Na wejściu otrzymujemy spójny graf $G$. Szukamy wierzchołka o minimalnym stopniu $v_0$, przeszukujemy krawędzie w kolejności działania algorytmu BFS, z wierzchołkiem początkowym $v_0$. Zakładamy, że każda krawędź incydentna z $v_0$ należy do innego czynnika. Przechodzimy po krawędziach zgodnie z kolejnością uzyskaną przez algorytm BFS i używając już przeszukanych krawędzi przystępujemy do etykietowania. Jest to procedura zawierająca w sobie kolorowanie krawędzi i sortowanie ich w listy krawędzi monochromatycznych, incydentnych z danym wierzchołkiem. Jeżeli procedura ta nie będzie się mogła wykonać w jakimś momencie, oznacza to, że mamy zbyt dużo zakładanych czynników. Aby można było dalej kontynuować nasz algorytm łączymy dwa czynniki w jeden, co najlepiej obrazuje fakt, że dwa kolory łączą się w jeden. Następnie po wykonaniu kroku etykietowania sprawdzamy czy nie została naruszona struktura naszego produktu. Procedurę tę nazywamy sprawdzaniem spójności. Jeżeli sprawdzanie nie będzie mogło być wykonane, to podobnie jak w przypadku etykietowania łączymy kolory. Algorytm kończy się w momencie, gdy ostatnia krawędź zostaje przeprocesowana. \\
+Tak jak wspomnieliśmy wcześniej, algorytm jest liniowy względem danych wejściowych. Dla grafów spójnych jest to jednoznaczne z rozmiarem danego grafu, przy założeniu, że podajemy listy sąsiedztwa a nie macierz sąsiedztwa. Ponieważ każda krawędź jest procesowana, oznacza to mniej więcej, że etykietowanie i sprawdzanie spójności dla każdej krawędzi powinno być wykonane w czasie stałym. Dla operacji łączenia kolorów, zauważmy następujący fakt, iż początkowa liczba kolorów jest równa minimalnemu stopniu grafu $d_0$, tak więc tych operacji będzie co najwyżej $d_0$. Każda operacja może być wykonana w czasie $\mathcal{O}(n)$, gdzie $n$ oznacza rząd grafu, a ponieważ $nd_0 \leq 2m $ to i łącznie kolorów nie zwiększa złożoności czasowej naszego algorytmu.\\
+Jeżeli chodzi o złożoność pamięciową, istotną sprawą jest, aby dobierać struktury danych bardzo rozważnie, aby i tutaj zachować nasze początkowe założenie o pamięciowej liniowości naszego algorytmu, co dokładnie opisane jest w dalszych rozdziałach. \\
+Cały algorytm opiera się na trzech lematach: lemacie o kwadracie, lemacie o izomorfizmie i lemacie o udoskonaleniu faktoryzacji iloczynu kartezjańskiego. Każdy z nich odpowiada za jedną z fundamentalnych operacji. Lemat o kwadracie odpowiada za etykietowanie, lemat o izomorfizmie za sprawdzanie spójności, natomiast lemat o udoskonaleniu za łączenie kolorów.
+\subsection{Wkład własny}
 Tak jak wspomniano na początku praca ta opiera się na artykule $"$Recognizing Cartesian product in linear time$"$. W ramach prac dokonano translacji tego artykułu, lekko zmieniając jego formę. W ramach pracy twórczej przeprowadzono dowód lematu o trójkącie oraz lematu o kwadracie (rozdział 2.3 oraz 2.4), wykonano analizę tworzenia tablic inicjalizowanych częściowo (rozdział 4.3) oraz dowód liniowej złożoności sprawdzania spójności (rozdział 5).  
 \newpage
 
-\section{Wprowadzenie}
+\section{Wstęp}
 \subsection{Informacje wstępne}
+\begin{dfn}
+Graf
+\end{dfn}
+Grafem nazywamy uoprządkowaną parę $(V, E)$, gdzie $V$ jest niepustym zbiorem, natomiast $E \subseteq P_2 (V)$, gdzie $P_2(V)$ jest zbiorem wszystkich dwuelementowych pozbiorów zbioru $V$. Zbiór $V$ będzie nazywany zbiorem wierzchołków, natomiast $E$ zbiorem krawędzi. 
 
-\textbf{Grafem} nazywamy uoprządkowaną parę $(V, E)$, gdzie $V$ jest niepustym zbiorem, natomiast $E \subseteq P_2 (V)$, gdzie $P_2(V)$ jest zbiorem wszystkich dwuelementowych pozbiorów zbioru $V$. Zbiór $V$ będzie nazywany zbiorem \textbf{wierzchołków}, natomiast $E$ zbiorem \textbf{krawędzi}. Dla danej krawędzi $\{v_1 , v_2 \}$ mówimy, że wierzchołki $v_1$ oraz $v_2$ są \textbf{końcami} tej krawędzi. Krawędź jest \textbf{incydentna} z wierzchołkiem, jeżeli jest on końcem tej krawędzi. Mówimy, że dwa wierzchołki $v_1, v_2 \in V$ są \textbf{sąsiednie}, jeżeli wystęuje międdzy nimi krawędź, czyli $\{v_1, v_2\} \in E$
-Jeżeli zbiór $V$ jest zbiorem skończonym, wówczas mówimy o \textbf{grafach skończonych}, w przecziwnym przypadku mowa o \textbf{grafach nieskończonych}. W tej pracy skupimy się tylko i wyłącznie na grafach skończonych.\\
- \tab[0.6cm]Listę $v_1, v_2, ..., v_k$, składającą się z wierzchołków, nazwyamy \textbf{ścieżką}, jeżeli dla dowolnego $i \in \{1,2,..., k-1\} $ wierzchołki $v_i$ oraz  $v_{i+1}$ są sąsiednie. \textbf{Ścieżka prosta}, to ścieżka, w której dowolny wierzchołek pojawia się maksymalnie jeden raz. Analogicznie definujemy \textbf{drogę} oraz \textbf{drogę prostą} między wierzchołkami, z tą różnicą, że elementami drogi są krawędzie oraz wierzchołek początkowy jest końcem pierwszej krawędzi w drodze, natomiast wierzchołek końcowy jest końcem ostatniej krawędzi.
-Jeżeli między dwoma wierzchołkami istnieje droga, to \textbf{odległością} między wierzchołkami nazywamy długość najkrótszej drogi między nimi. Jeżeli w grafie, między dwoma dowolnymi wierzchołkami, występuje ścieżka to graf ten nazywamy \textbf{grafem spójnym}. W tej pracy skupimy się wyłącznie na takich grafach.\\
-\tab[0.6cm]\textbf{Stopień wierzchołka} to ilość krawędzi, incydentnych z danym wierzchołkiem. \textbf{Najmniejszym stopniem wierzchołka w grafie} nazywamy najmniejszy stopień, pośród wszystkich wierzchołków grafu, analogicznie definiujemy \textbf{największy stopień wierzchołka}. \\
+\begin{dfn}
+Grafy skończone i nieskończone
+\end{dfn}
+Jeżeli zbiór $V$ jest zbiorem skończonym, wówczas mówimy o grafach skończonych, w przecziwnym przypadku mowa o grafach nieskończonych. W tej pracy skupimy się tylko i wyłącznie na grafach skończonych.
 
-\textbf{Iloczynem kartezjańskim} zbiorów $A$ i $B$ nazywamy zbiór wszystkich uporządkowanych par $(a,b)$, takich że $a$ należy do zbioru $A$ natomast $b$ należy do $B$. Iloczyn kartezjański zbiorów $A$ i $B$ oznacza się symbolem $A \times B$.\\
-\tab[0.6cm]\textbf{Iloczynem kartezjańskim grafów} $G_1 = (V_1 , E_1 ) $ i $ G_2 =(V_2 , E_2 ) $ nazywamy graf $G = (V, E)$, którego zbiorem wierzchołków jest iloczyn kartezjański wierzchołków grafów $G_1$ i $G_2$ $(V=V_1 \times V_2 )$, natomiast wierzchołki $(x_1, y_1)$ oraz $(x_2, y_2)$ są połączone w grafie $G$ jeżeli $x_1 = x_2$ oraz $y_1 y_2 \in E_2 $ lub $x_1 x_2 \in E_1 $ oraz $y_1 = y_2 $. Iloczyn kartezjański grafów oznaczamy symbolem $G_1 \square G_2$.\\
+\begin{dfn}
+Wierzchołki sąsiednie
+\end{dfn}
+Mówimy, że dwa wierzchołki $v_1, v_2 \in V$ są sąsiednie, jeżeli wystęuje międdzy nimi krawędź, czyli $\{v_1, v_2\} \in E$.
+
+\begin{dfn}
+Ścieżka między wierzchołkami
+\end{dfn}  
+Listę $v_1, v_2, ..., v_k$, składającą się z wierzchołków, nazwyamy ścieżką, jeżeli dla dowolnego $i \in \{1,2,..., k-1\} $ istnieje krawędź $v_i v_{i+1}$.
+
+\begin{dfn}
+Ścieżka prosta
+\end{dfn}
+Ścieżka prosta, to ścieżka, w której dowolny wierzchołek pojawia się maksymalnie jeden raz.
+
+\begin{dfn}
+Odległość między wierzchołkami.
+\end{dfn}
+Jeżeli między dwoma wierzchołkami istnieje ścieżka, to odległością między wierzchołkami nazywamy długość najkrótszej ścieżki pomniejszoną o jeden. Jeżeli między wierzchołkami nie występuje ścieżka nie definiujemy odległości międdzy wierzchołkami.
+
+\begin{dfn}
+Graf spójny
+\end{dfn}
+Mówimy, że graf jest spójny jeżeli istnieje ścieżka między dowolnymi dwoma wierzchołkami.
+
+\begin{dfn}
+Stopień wierzchołka
+\end{dfn}
+Stopień wierzchołka to ilość krawędzi, wychodzących z tego wierzchołka. 
+\begin{dfn}
+Produkt Kartezjański
+\end{dfn}
+Produktem kartezjańskim $G_1 \square G_2 $ grafów $G_1 = (V_1 , E_1 ) $ i $ G_2 =(V_2 , E_2 ) $ nazywamy graf $G = (V, E)$, którego zbiorem wierzchołków jest iloczyn kartezjański wierzchołków grafów $G_1$ i $G_2$ $(V=V_1 \times V_2 )$, natomiast wierzchołki $(x_1, y_1)$ oraz $(x_2, y_2)$ są połączone w grafie $G$ jeżeli $x_1 = x_2$ oraz $y_1 y_2 \in E_2 $ lub $x_1 x_2 \in E_1 $ oraz $y_1 = y_2 $.\\
 Iloczyn kartezjański grafów jest działaniem łącznym, przemiennym, z dokładnością do izomorfizmu, elementem neutralnym działania jest graf $K_1$.
 \begin{dfn}
 Współrzędne wierzchołków w produkcie
