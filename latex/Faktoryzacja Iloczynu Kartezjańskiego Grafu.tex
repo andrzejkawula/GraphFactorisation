@@ -24,7 +24,10 @@
 \usepackage{color}
 \usepackage{indentfirst}
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage[nottoc,numbib]{tocbibind}
 \newtheorem{dfn}{Definicja}
+\newtheorem{twr}{Twierdzenie}
+\newtheorem{lem}[twr]{Lemat}
 \newcommand\tab[1][1cm]{\hspace*{#1}}
 \selectlanguage{polish}
 \definecolor{szary}{gray}{0.6}
@@ -63,13 +66,13 @@ Andrzej Kawula
 \end{center}
 \begin{flushleft}
 \end{flushleft}
-\textit{kierunek:} Matematyka\\
+\textit{kierunek:} matematyka\\
 \\
-\textit{specjalizacja:} Matematyka w Informatyce \\
+\textit{specjalizacja:} matematyka w informatyce \\
 \\
 \textit{nr albumu:} 258604 \\
 \\
-\textit{promotor:} dr hab. Monika Pilśniak\\
+\textit{opiekun:} dr hab. Monika Pilśniak\\
 \\
 \begin{figure}[h]
 \centering
@@ -125,18 +128,14 @@ baz oraz współpracujących z nimi systemów informatycznych.
 \newpage
 
 \textbf{Streszczenie}\\
-
-Inspiracją oraz głównym źródłem wykorzystywanym w niniejszej pracy magisterskiej jest artykuł Wilfrieda Imricha oraz Iztoka Peterina z 2007 roku pod tytułem $"$Recognizing Cartesian product in linear time$"$. \\
-Pierwszy rozdział zawiera informacje o badaniach iloczynu kartezjańskiego grafów, ze szczególnym uwzględnieniem faktoryzacji iloczynu kartezjańskiego na czynniki pierwsze, oraz ogólną koncepcję algorytmu opisanego w pracy. Drugi rozdział to opis podstawowych definicji, związanych z iloczynem kartezjańskim grafów i jego rozkładem oraz dowody lematów wykorzystywanych w algorytmie. Trzeci rozdział to opis algorytmu kolorowania krawędzi grafu. Czwarty rozdział opisuje procedurę etykietowania grafu. Etykietowanie jest rozszerzeniem definicji kolorowania, opisanej w rozdziale trzecim. Piąty rozdział to opis procedury nazwanej sprawdzaniem spójności. Ostatni rozdział opisuje już ostateczny algorytm faktoryzacji wykorzystujący, po za wspomnianymi wcześniej procedurami etykietowania i sprawdzania spójności, procedurę łączenia kolorów. \\
-\\
-\textbf{Słowa kluczowe}\\
-
-graf, iloczyn kartezjański grafów, faktoryzacja iloczynu kartezjańskiego grafów, złożoność pamięciowa, złożoność obliczeniowa, przeszukiwanie grafu wszerz, kolorowanie,
+\tab[0.6cm]Inspiracją oraz głównym źródłem wykorzystywanym w niniejszej pracy magisterskiej jest artykuł Wilfrieda Imricha oraz Iztoka Peterina z 2007 roku pod tytułem $"$Recognizing Cartesian product in linear time$"$. \\
+\tab[0.6cm]Pierwszy rozdział zawiera informacje o badaniach iloczynu kartezjańskiego grafów, ze szczególnym uwzględnieniem faktoryzacji iloczynu kartezjańskiego na czynniki pierwsze oraz ogólną koncepcję algorytmu opisanego w pracy. Drugi rozdział to opis podstawowych definicji, związanych z teorią grafów, iloczynem kartezjańskim grafów i jego rozkładem oraz dowody lematów wykorzystywanych w algorytmie. Trzeci rozdział to opis algorytmu kolorowania krawędzi grafu. Czwarty opisuje procedurę etykietowania grafu będącą rozszerzeniem definicji kolorowania, opisanej w rozdziale trzecim. Piąty rozdział to opis procedury nazwanej sprawdzaniem spójności. Następny rozdział opisuje ostateczny algorytm faktoryzacji wykorzystujący, po za wspomnianymi wcześniej procedurami etykietowania i sprawdzania spójności, procedurę łączenia kolorów. Ostatni rozdział to podsumowanie prac.\\
+\tab[0.6cm]\textbf{Abstract}\\
+\tab[0.6cm]Article of Wilffred Imrich and Izotok Peterin from 2007 $"$Recognizing Cartesian product in linear time$"$ was the inspiration and main origin using in this master thesis.\\
+\tab[0.6cm]First chapter maintain information about researches with cartesian product of graph, mainly related with factorisation of cartesian product, and idea of algorith placed in this thesis. Second chapter describe theorems related with graph theory and cartesian product of graphs, also few lemmas, witch are used in our algorithm. Third chapter describe coloring algorithm. Fourth shows labbeling procedure, witch is extension of coloring, described in third chapter. Fifth chapter describe procedure called consistency check. Next chapter is finall algorithm of prime factorisation of cartesian product of graphs witch use also procedure called color merging, beside mention labelling and consistency check. Last chapter is conclusion of whole thesis.\\
+\tab[0.6cm]\textbf{Słowa kluczowe:} graf, iloczyn kartezjański grafów, faktoryzacja iloczynu kartezjańskiego grafów, złożoność pamięciowa, złożoność obliczeniowa, przeszukiwanie grafu wszerz, kolorowanie,
 etykietowanie, sprawdzanie spójności, łączenie kolorów.\\
-\\
-\textbf{Keywords}\\
-
-graph, cartesian product of graphs, factoring cartesian product of graphs, memory complexity, computational complexity, breadth-first search, coloring,
+\tab[0.6cm]\textbf{Keywords:} graph, cartesian product of graphs, factoring cartesian product of graphs, memory complexity, computational complexity, breadth-first search, coloring,
 labelling, consistency check, colors merging.
 \newpage
 \tableofcontents
@@ -147,126 +146,335 @@ labelling, consistency check, colors merging.
 Inspiracją oraz głównym źródłem wykorzystywanym w niniejszej pracy magisterskiej jest artykuł Wilfrieda Imricha oraz Iztoka Peterina z 2007 roku pod tytułem $"$Recognizing Cartesian product in linear time$"$ ~\cite{MAIN}. \\
 
 Iloczyn kartezjański jest powszechny w teorii grafów. Ma on szczególne własności algebraiczne, strukturalne i metryczne. Najbardziej znanymi przykładami są hiperkostki, grafy Hamminga czy kraty. Hiperkostki to potęgi grafu $K_2$, grafy Hamminga to iloczyn grafów pełnych natomiast kraty to iloczyn ścieżek. Iloczyn kartezjański jak i izomorficzne podgrafy tegoż iloczynu mają wiele zastosowań w informatyce, chemii czy biologii.\\
-\tab[0.6cm]Jeżeli chodzi o prace nad produktem kartezjańskim na początek trzeba wspomnieć o publikacjach Sabidussiego ~\cite{SAB} oraz Wisinga ~\cite{VIS} z lat '60 ubiegłego stulecia. Część rozważań dotyczyła możliwości rozłożenia danego grafu na iloczyn grafów prostych, gdzie grafem prostym nazywamy graf, który nie jest iloczynem kartezjańskim dwóch innych grafów nietrywialnych (czyli posiadających więcej niż jeden wierzchołek). Niezależnie Sabidussi oraz Wising udowodnili, że każdy graf spójny posiada unikalny rozkład na iloczyn grafów prostych z dokładnością do kolejności oraz izomorfizmu czynników. Dla grafów niespójnych faktoryzacja grafów może być niejednoznaczna.\\
-\tab[0.6cm]Jeżeli chodzi o dalsze prace nad iloczynem kartezjańskim grafów, w latach '70 powstało pytanie, czy istnieje wielomianowy algorytm, pozwalający na faktoryzację grafu spójnego na czynniki pierwsze. Pierwszy dowód tego faktu powstał w 1985 roku, kiedy to Feigenbaum ~\cite{FEI} opisał algorytm o złożoności czasowej $\mathcal{O} (n^{4.5})$, gdzie $n$ oznacza liczbę wierzchołków w grafie, będącym produktem iloczynu kartezjańskiego. Winkler ~\cite{WIN} niezależnie skonstruował zupełnie inny algorytm o złożoności $\mathcal{O} (n^{4})$, a następnie Feder ~\cite{FED} algorytm o złożoności czasowej $\mathcal{O} (nm)$ oraz pamięciowej $\mathcal{O} (m)$. Następnie Aurenhammer ~\cite{AUR} zmodyfikował jeszcze ten algorytm, dzięki czemu złożoność czasowa spadała do $\mathcal{O} (m\cdot log (n))$.\\
+\tab[0.6cm]Jeżeli chodzi o prace nad produktem kartezjańskim na początek trzeba wspomnieć o publikacjach Sabidussiego ~\cite{SAB} oraz Wizinga ~\cite{VIS} z lat '60 ubiegłego stulecia. Część rozważań dotyczyła możliwości rozłożenia danego grafu na iloczyn grafów prostych, gdzie grafem prostym nazywamy graf, który nie jest iloczynem kartezjańskim dwóch innych grafów nietrywialnych (czyli posiadających więcej niż jeden wierzchołek). Niezależnie Sabidussi oraz Wizing udowodnili, że każdy graf spójny posiada unikalny rozkład na iloczyn grafów prostych z dokładnością do kolejności oraz izomorfizmu czynników. Dla grafów niespójnych faktoryzacja grafów może być niejednoznaczna.\\
+\tab[0.6cm]Jeżeli chodzi o dalsze prace nad iloczynem kartezjańskim grafów, w latach '70 powstało pytanie, czy istnieje wielomianowy algorytm, pozwalający na faktoryzację grafu spójnego na czynniki pierwsze. Pierwszy dowód tego faktu powstał w 1985 roku, kiedy to Feigenbaum ~\cite{FEI} opisał algorytm o złożoności czasowej $\mathcal{O} (n^{4.5})$, gdzie $n$ oznacza liczbę wierzchołków w grafie, będącym iloczynem kartezjańskim. Winkler ~\cite{WIN} niezależnie skonstruował zupełnie inny algorytm o złożoności $\mathcal{O} (n^{4})$, a następnie Feder ~\cite{FED} algorytm o złożoności czasowej $\mathcal{O} (nm)$ oraz pamięciowej $\mathcal{O} (m)$. Następnie Aurenhammer ~\cite{AUR} zmodyfikował jeszcze ten algorytm, dzięki czemu złożoność czasowa spadała do $\mathcal{O} (m\cdot log (n))$.\\
 \\
-\tab[0.6cm]Algorytm zaprezentowany w niniejszej pracy jest liniowy zarówno jeżeli chodzi o złożoność czasową jak i pamięciową. Tak więc osiągamy najmniejszą możliwą złożoność do osiągnięcią. Jest on również łatwiejszy jeżeli chodzi o samą koncepcję od przedstawionych powyżej. Polega on na podziale zbioru krawędzi grafu wejściowego na zbiory reprezentujące czynniki proste, będące elementami iloczynu kartezjańskiego. Ten podział krawędzi jest nieodłączną własnością metryczną naszego wejściowego grafu. Wystarczy znaleźć ten podział, nie ma potrzeby tworzenia dodatkowych struktur, wystarczy rozszerzyć podstawowe. Nie trzeba także dokonywać dekompozycji naszego grafu wejściowego w czasie działania algorytmu. \\
+\tab[0.6cm]Algorytm zaprezentowany w niniejszej pracy jest liniowy zarówno jeżeli chodzi o złożoność czasową jak i pamięciową. Tak więc osiągamy najmniejszą możliwą złożoność do osiągnięcia. Jest on również łatwiejszy jeżeli chodzi o samą koncepcję od przedstawionych powyżej. Polega on na podziale zbioru krawędzi grafu wejściowego na zbiory reprezentujące czynniki proste, będące elementami iloczynu kartezjańskiego. Ten podział krawędzi jest nieodłączną własnością metryczną naszego wejściowego grafu. Wystarczy znaleźć ten podział, nie ma potrzeby tworzenia dodatkowych struktur, wystarczy rozszerzyć podstawowe. Nie trzeba także dokonywać dekompozycji naszego grafu wejściowego w czasie działania algorytmu. \\
 
-Praca została podzielona na kilka rozdziałów. Pierwszy, jak można było przeczytać zaiwera informacje o historii prac nad problemem faktoryzacji iloczynu kartezjańskiego grafów. Drugi opsiuje podstawowe pojęcia z teorii grafów, terminologię związaną z iloczynem kartezjańskim grafów, jak i twierdzenia wykorzystywane w kolejnych rozdziałach. Trzeci rozdział przedstawia algorytm kolorowania krawędzi, który posłuży nam następnie do faktoryzacji iloczynu kartezjańskiego. Następny rozdział rozszerza kolorowanie przedstawione w poprzednim rozdziale, zwane dalej etykietowaniem krawędzi. Piąty rozdział przedstawia kompletny algorytm faktoryzacji iloczynu kartezjańskiego grafów, wykorzystujący po za wspomnianym wcześniej etykietowaniem, procedurę łączenia kolorów. Ostatni rozdział to podsumanie prac. \\
+Praca została podzielona na kilka rozdziałów. Pierwszy, jak można było przeczytać zawiera informacje o historii prac nad problemem faktoryzacji iloczynu kartezjańskiego grafów. Drugi opisuje podstawowe pojęcia z teorii grafów, terminologię związaną z iloczynem kartezjańskim grafów, jak i twierdzenia wykorzystywane w kolejnych rozdziałach. Trzeci rozdział przedstawia algorytm kolorowania krawędzi, który posłuży nam następnie do faktoryzacji iloczynu kartezjańskiego. Następny rozdział rozszerza kolorowanie przedstawione w poprzednim rozdziale, zwane dalej etykietowaniem krawędzi. Piąty rozdział przedstawia kompletny algorytm faktoryzacji iloczynu kartezjańskiego grafów, wykorzystujący po za wspomnianym wcześniej etykietowaniem, procedurę łączenia kolorów. Ostatni rozdział to podsuwanie prac. \\
 
-Tak jak wspomniano na początku praca ta opiera się na artykule $"$Recognizing Cartesian product in linear time$"$. W ramach prac dokonano translacji tego artykułu, lekko zmieniając jego formę. W ramach pracy twórczej przeprowadzono dowód lematu o trójkącie oraz lematu o kwadracie (rozdział 2.3 oraz 2.4), wykonano analizę tworzenia tablic inicjalizowanych częściowo (rozdział 4.3) oraz dowód liniowej złożoności sprawdzania spójności (rozdział 5).  
+Tak jak wspomniano na początku praca ta opiera się na artykule $"$Recognizing Cartesian product in linear time$"$. W ramach prac dokonano translacji tego artykułu, lekko zmieniając jego formę. W ramach pracy twórczej przeprowadzono dowód lematu o trójkącie oraz lematu o kwadracie , wykonano analizę tworzenia tablic inicjalizowanych częściowo oraz dowód liniowej złożoności sprawdzania spójności. 
 \newpage
 
 \section{Wprowadzenie}
-\subsection{Informacje wstępne}
+W tym rozdziale opiszemy podstawowe definicje i twierdzenia związane z~tematyką naszej pracy. Zaczniemy od podstawowych definicji z teorii grafów. Następnie przedstawimy algorytm przeszukiwania grafu. W dalszej części przejdziemy do definicji związanych z iloczynem kartezjańskim grafów a na końcu opiszemy kilka lematów wykorzystywanych w następnych rozdziałach.
+\subsection{Graf}
 
-\textbf{Grafem} nazywamy uoprządkowaną parę $(V, E)$, gdzie $V$ jest niepustym zbiorem, natomiast $E \subseteq P_2 (V)$, gdzie $P_2(V)$ jest zbiorem wszystkich dwuelementowych pozbiorów zbioru $V$. Zbiór $V$ będzie nazywany zbiorem \textbf{wierzchołków}, natomiast $E$ zbiorem \textbf{krawędzi}. Dla danej krawędzi $\{v_1 , v_2 \}$ mówimy, że wierzchołki $v_1$ oraz $v_2$ są \textbf{końcami} tej krawędzi. Krawędź jest \textbf{incydentna} z wierzchołkiem, jeżeli jest on końcem tej krawędzi. Mówimy, że dwa wierzchołki $v_1, v_2 \in V$ są \textbf{sąsiednie}, jeżeli wystęuje międdzy nimi krawędź, czyli $\{v_1, v_2\} \in E$
-Jeżeli zbiór $V$ jest zbiorem skończonym, wówczas mówimy o \textbf{grafach skończonych}, w przecziwnym przypadku mowa o \textbf{grafach nieskończonych}. W tej pracy skupimy się tylko i wyłącznie na grafach skończonych.\\
- \tab[0.6cm]Listę $v_1, v_2, ..., v_k$, składającą się z wierzchołków, nazwyamy \textbf{ścieżką}, jeżeli dla dowolnego $i \in \{1,2,..., k-1\} $ wierzchołki $v_i$ oraz  $v_{i+1}$ są sąsiednie. \textbf{Ścieżka prosta}, to ścieżka, w której dowolny wierzchołek pojawia się maksymalnie jeden raz. Analogicznie definujemy \textbf{drogę} oraz \textbf{drogę prostą} między wierzchołkami, z tą różnicą, że elementami drogi są krawędzie oraz wierzchołek początkowy jest końcem pierwszej krawędzi w drodze, natomiast wierzchołek końcowy jest końcem ostatniej krawędzi.
+\textbf{Grafem} nazywamy uporządkowaną parę $(V, E)$, gdzie $V$ jest niepustym zbiorem, natomiast $E \subseteq P_2 (V)$, gdzie $P_2(V)$ jest zbiorem wszystkich dwuelementowych podzbiorów zbioru $V$. Zbiór $V$ będzie nazywany zbiorem \textbf{wierzchołków}, natomiast $E$ zbiorem \textbf{krawędzi}. \textbf{Rzędęm} grafu nazywamy ilość wierzchołków, natomiast \textbf{rozmiar} grafu to ilość krawędzi. Dla danej krawędzi $\{v_1 , v_2 \}$ mówimy, że wierzchołki $v_1$ oraz $v_2$ są \textbf{końcami} tej krawędzi. Krawędź jest \textbf{incydentna} z wierzchołkiem, jeżeli jest on końcem tej krawędzi. Mówimy, że dwa wierzchołki $v_1, v_2 \in V$ są \textbf{sąsiednie}, jeżeli występuje między nimi krawędź, czyli $\{v_1, v_2\} \in E$
+Jeżeli zbiór $V$ jest zbiorem skończonym, wówczas mówimy o~\textbf{grafach skończonych}, w przeciwnym przypadku mowa o \textbf{grafach nieskończonych}. W tej pracy skupimy się tylko i wyłącznie na grafach skończonych.\\
+\tab[0.6cm]\textbf{Podgrafem} danego grafu $G$ nazywamy graf, powstały poprzez usunięcie z~grafu $G$ wierzchołków lub krawędzi, przy czym usunięcie wierzchołka powoduje usunięcie wszystkich krawędzi incydentnych z tym wierzchołkiem. \textbf{Podgrafem indukowanym} na zbiorze wierzchołków $V'$ nazywamy podgraf powstały przez usunięcie wszystkich wierzchołków nie należących do $V'$. \\
+\tab[0.6cm]Listę $v_1, v_2, ..., v_k$, składającą się z wierzchołków, nazywamy \textbf{ścieżką}, jeżeli dla dowolnego $i \in \{1,2,..., k-1\} $ wierzchołki $v_i$ oraz $v_{i+1}$ są sąsiednie. \textbf{Ścieżka prosta}, to ścieżka, w której dowolny wierzchołek pojawia się maksymalnie jeden raz. Analogicznie definiujemy \textbf{drogę} oraz \textbf{drogę prostą} między wierzchołkami, z tą różnicą, że elementami drogi są krawędzie oraz wierzchołek początkowy jest końcem pierwszej krawędzi w drodze, natomiast wierzchołek końcowy jest końcem ostatniej krawędzi.
 Jeżeli między dwoma wierzchołkami istnieje droga, to \textbf{odległością} między wierzchołkami nazywamy długość najkrótszej drogi między nimi. Jeżeli w grafie, między dwoma dowolnymi wierzchołkami, występuje ścieżka to graf ten nazywamy \textbf{grafem spójnym}. W tej pracy skupimy się wyłącznie na takich grafach.\\
-\tab[0.6cm]\textbf{Stopień wierzchołka} to ilość krawędzi, incydentnych z danym wierzchołkiem. \textbf{Najmniejszym stopniem wierzchołka w grafie} nazywamy najmniejszy stopień, pośród wszystkich wierzchołków grafu, analogicznie definiujemy \textbf{największy stopień wierzchołka}. \\
+\tab[0.6cm]\textbf{Stopień wierzchołka} $v$ to ilość krawędzi, incydentnych z danym wierzchołkiem. Oznaczamy go $d(v)$. \\
+\tab[0.6cm]Z tego, że każda krawędź ma dwa końce można wywnioskować następujący fakt, że w każdym grafie $G=(V,E)$ zachodzi równość:
+\begin{center}$\sum_{v \in V}d(v) = 2|E|$ \end{center}
+Równość ta znana jest jako \textbf{lemat o uścisku dłoni}.\\
+\tab[0.6cm]\textbf{Najmniejszym stopniem wierzchołka w grafie} nazywamy najmniejszy stopień, pośród wszystkich wierzchołków grafu, analogicznie definiujemy \textbf{największy stopień wierzchołka}. \\
 
-\textbf{Iloczynem kartezjańskim} zbiorów $A$ i $B$ nazywamy zbiór wszystkich uporządkowanych par $(a,b)$, takich że $a$ należy do zbioru $A$ natomast $b$ należy do $B$. Iloczyn kartezjański zbiorów $A$ i $B$ oznacza się symbolem $A \times B$.\\
-\tab[0.6cm]\textbf{Iloczynem kartezjańskim grafów} $G_1 = (V_1 , E_1 ) $ i $ G_2 =(V_2 , E_2 ) $ nazywamy graf $G = (V, E)$, którego zbiorem wierzchołków jest iloczyn kartezjański wierzchołków grafów $G_1$ i $G_2$ $(V=V_1 \times V_2 )$, natomiast wierzchołki $(x_1, y_1)$ oraz $(x_2, y_2)$ są połączone w grafie $G$ jeżeli $x_1 = x_2$ oraz $y_1 y_2 \in E_2 $ lub $x_1 x_2 \in E_1 $ oraz $y_1 = y_2 $. Iloczyn kartezjański grafów oznaczamy symbolem $G_1 \square G_2$.\\
-Iloczyn kartezjański grafów jest działaniem łącznym, przemiennym, z dokładnością do izomorfizmu, elementem neutralnym działania jest graf $K_1$.
-\begin{dfn}
-Współrzędne wierzchołków w produkcie
-\end{dfn}
-Z łączności iloczynu kartezjańskiego możemy zapisać $G_1 \square G_2 \square ... \square G_k = G$. Następnie wszystkim wierzchołkom grafu przypisujemy $k$-elementową listę $(v_1, v_2 , ... v_k )$ gdzie $v_i \in V(G_i)$ dla $1 \leqslant i \leqslant k $. Lista ta będzie odtąd nazywana współrzędną wierzchołka $v$ i będzie służyć do określenia pozycji danego wierzchołka w produkcie. Korzystając ze współrzędnych, możemy zdefiniować rzutowanie $p_i : V \rightarrow V_i $ dla $1 \leqslant i \leqslant k $, które dane jest wzorem $p_i (v) = v_i $, gdzie $v_i$ jest i-tym elementem współrzędnych wierzchołka $v$. Wierzchołek $v_i$ grafu $G_i$ będzie i-tą współrzędną wierzchołka $v$. 
-\begin{dfn}
-Warstwy w produkcie
-\end{dfn}
-Jeżeli w grafie $G$ dany jest wierzchołek $v$ i rozważymy wierzchołki, które różnią się od wierzchołka $v$ tylko na i-tej pozycji, to podgraf indukowany przez te wierzchołki utworzy graf izomorficzny z grafem $G_i$. Podgraf ten będzie nazywany i-tą warstwą $G_i$ przechodzącą przez wierzchołek $v$ a jego oznaczeniem będzie $G_i ^v$.
-\begin{dfn}
-Wierzchołek jednostkowy i warstwy jednostkowe
-\end{dfn}
-Niech $v_0$ będzie wyróżnionym wierzchołkiem w grafie $G$. Wierzchołek ten będziemy nazywać wierzchołkiem jednostkowym, natomiast wszystkie warstwy przechodzące przez $v_0$ nazywamy warstwami jednostkowymi. Wierzchołek $v_0$ należy do każdej warstwy jednostkowej, natomiast zbiory $V(G_i ^{v_0}) \setminus \{v_0\}$ są parami rozłączne dla $1 \leqslant i \leqslant k $. Wierzchołek jednostkowy będzie pierwszym wierzchołkiem, od którego będziemy rozpoczynać wszystkie procedury opisane w następnych rozdziałach.
-
-\begin{figure}
+Mówimy, że dwa grafy są \textbf{izomorficzne} jeżeli istnieje bijekcja zbioru wierzchołków grafu pierwszego na zbiór wierzchołków grafu drugiego, taka że jeżeli dwa wierzchołki są połączone w jednym z grafów to i również połączone są dwa odpowiadające im wierzchołki w drugim z grafów. Bijekcję tą nazywamy \textbf{izomorfizmem}. Izomorfizm grafów zachowuje wiele własności grafów, między innymi liczbę wierzchołków i krawędzi, stopnie wierzchołków, spójność. Dlatego często grafy izomorficzne utożsamia się ze sobą.\\
+\subsection{Reprezentacje grafów}
+Przez reprezentację grafu rozumiemy sposób, w jaki jest on przetrzymywany w pamięci. Jest to kluczowe zagadnienie w każdym algorytmie grafowym. Wśród reprezentacji grafów najczęściej rozpowszechnione są listy sąsiedztwa oraz tablica sąsiedztwa.\\
+\tab[0.6cm]Jeżeli chodzi o listy sąsiedztwa, idea polega na tym że każdemu wierzchołkowi przyporządkowujemy listę długości stopnia danego wierzchołka. W liście tej znajdują się wszystkie wierzchołki sąsiadujące z danym wierzchołkiem. Całkowita długość tych list jak i czas potrzebny do inicjalizacji jest zatem proporcjonalny do liczby krawędzi grafu. W przypadku tablicy sąsiedztwa, tworzona jest dwuwymiarowa tablica $n \times n$, gdzie $n$ to rząd grafu. W komórce $(u,v)$ mamy informację czy wierzchołki $u$ oraz $v$ są połączone. W standardowym przypadku, jeżeli w komórce tej istnieje wartość 0 wówczas wierzchołki te są niepołączone, w przeciwnym przypadku widnieje tam wartość 1. Inicjalizacja takiej tablicy oraz ilość pamięci potrzebna do stworzenia takiej tablicy jest proporcjonalna do kwadratu ilości wierzchołków. Tak więc zaletą pierwszej reprezentacji jest mniejsza złożoność czasowa i pamięciowa, jednakże druga reprezentacja pozwala w czasie stałym określić czy dane dwa wierzchołki są połączone, co dla pierwszej reprezentacji, w pesymistycznym przypadku może być wykonane w czasie proporcjonalnym do ilości krawędzi. Stosowanie pierwszej lub drugiej reprezentacji jest zatem zależne od problemu który mamy rozwiązać. W naszej pracy będziemy wykorzystywać obydwie reprezentację aczkolwiek końcowy algorytm będzie korzystał tylko z list sąsiedztwa, co jest wymuszone założeniami o złożoności czasowej i pamięciowej algorytmu faktoryzacji.\\
+\tab[0.6cm]Wśród pozostałych reprezentacji warto wspomnieć o macierzy incydencji, tablicy krawędzi czy pękach wejściowych. Oczywiście dla specjalnych klas grafów mogą istnieć specyficzne reprezentacje. To samo tyczy się grafów nie będących grafami prostymi.
+\subsection{Przeszukiwanie grafu wszerz}
+W naszej pracy kilkukrotnie będziemy iterować po wszystkich wierzchołkach naszego grafu. Do tego celu będziemy wykorzystywać algorytm przeszukiwania grafu wszerz, nazywany dalej algorytmem BFS (ang.\textit{ breadth-first search, BFS}). Opiszemy tutaj wersję algorytmu dla grafów spójnych, gdyż jak już wcześniej wspomniano, tylko takimi grafami będziemy zajmować się w tej pracy.\\
+\tab[0.6cm]Na wejściu otrzymujemy graf $G$ oraz wyróżniony wierzchołek początkowy. Celem naszego algorytmu jest odwiedzenie wszystkich wierzchołków. W zależności od potrzeb podczas tych odwiedzin można wykonywać pewne operacje. Dla przykładu, będziemy obliczać odległość każdego wierzchołka od wierzchołka początkowego. Przedstawimy teraz pseudokod tegoż algorytmu.\newpage
+\begin{tabular}{|p{9.7cm}|} \hline
+\\
+\tab[-0.2cm]\textbf{BFS}(Graf $G$, Wierzchołek $s$)\\
+\tab[0.6cm]dla każdego wierzchołka $v$ grafu $G$\\
+\tab[1.2cm]odwiedzony[v] = nieodwiedzony;\\
+\tab[1.2cm]odległość[v] = nieskończoność;\\
+\tab[0.6cm]odwiedzony[s]=do odwiedzenia;\\
+\tab[0.6cm]odległość[s]=0;\\
+\tab[0.6cm]Q.dodaj(s);\\
+\tab[0.6cm]dopóki kolejka $Q$ jest niepusta\\
+\tab[1.2cm]v=Q.pobierz pierwszy element\\
+\tab[1.2cm]dla każdego sąsiada $u$ wierzchołka $v$\\
+\tab[1.8cm]jeżeli odwiedzony[u]=nieodwiedzony\\
+\tab[2.4cm]odwiedzony[u]=do odwiedzenia;\\
+\tab[2.4cm]odległość[u]=odległość[v]+1;\\
+\tab[2.4cm]Q.dodaj(u);\\
+\tab[1.2cm]odwiedzony[v]=odwiedzony; \\ 
+\\
+\hline
+\end{tabular}\\
+\\
+Dla grafów spójnych algorytm ten odwiedzi każdy z wierzchołków.\\
+Poniżej przykładowy graf i kolejność w jakiej zostały odwiedzone wierzchołki. Tym samym kolorem zostały oznaczone wierzchołki o takiej samej odległości od wierzchołka początkowego.
+\begin{figure}[h]
 \centering
-\includegraphics[width = 10cm]{rys1.png}
-\caption{G=$C_5 \square K_s \square K_2 = C_5 \square C_4$}
+\includegraphics[width = 9cm]{bfs.png}
+\caption{Kolejność odwiedzania wierzchołków w algorytmie BFS}
 \end{figure}
+\\
+\tab[0.6cm]Na koniec pozostaje nam kwestia złożoności czasowej i pamięciowej algorytmu BFS. Zakładamy, że graf podany na wejściu jest w postaci list sąsiedztwa. Niech $n$ oznacza liczbę wierzchołków natomiast $m$ liczbę krawędzi.\\
+\tab[0.6cm]Jeżeli chodzi o złożoność pamięciową, na wejściu posiadamy tablicę wierzchołków długości $n$ i listy sąsiedztwa o sumarycznej długości $m$. W trakcie działania algorytmu używamy dwóch tablic oraz kolejki, każda struktura o długości $n$. Tak więc sumaryczna złożoność pamięciowa jest równa $\mathcal{O}(m+n)$ co dla grafów spójnych jest równoważne $\mathcal{O}(m)$.\\
+\tab[0.6cm]Co do złożoności czasowej, odwiedzamy każdy wierzchołek dokładnie raz a w pesymistycznym przypadku przechodzimy również po każdej krawędzi. Tak więc złożoność czasowa naszego algorytmu jest równa $\mathcal{O}(m+n)$ co dla grafu spójnego znów sprowadza się do $\mathcal{O}(m)$.
+\subsection{Iloczyn kartezjański grafów}
+\textbf{Iloczynem kartezjańskim} zbiorów $A$ i $B$ nazywamy zbiór wszystkich uporządkowanych par $(a,b)$, takich że $a$ należy do zbioru $A$ natomiast $b$ należy do $B$. Iloczyn kartezjański zbiorów $A$ i $B$ oznacza się symbolem $A \times B$.\\
+\tab[0.6cm]\textbf{Iloczynem kartezjańskim grafów} $G_1 = (V_1 , E_1 ) $ i $ G_2 =(V_2 , E_2 ) $ nazywamy graf $G = (V, E)$, którego zbiorem wierzchołków jest iloczyn kartezjański wierzchołków grafów $G_1$ i $G_2$ $(V=V_1 \times V_2 )$, natomiast wierzchołki $(x_1, y_1)$ oraz $(x_2, y_2)$ są połączone w grafie $G$ jeżeli $x_1 = x_2$ oraz $y_1 y_2 \in E_2 $ lub $x_1 x_2 \in E_1 $ oraz $y_1 = y_2 $. Iloczyn kartezjański grafów oznaczamy symbolem $G_1 \square G_2$.
+\begin{figure}[h]
+\centering
+\includegraphics[width = 13.8cm]{graf.png}
+\caption{G=$C_5 \square K_2 \square K_2 = C_5 \square C_4$}
+\end{figure}
+\\
+\tab[0.6cm]Iloczyn kartezjański grafów jest działaniem łącznym, przemiennym, z dokładnością do izomorfizmu, elementem neutralnym działania jest graf $K_1$, co zaraz wykażemy.
+\begin{twr}
+Iloczyn kartezjański grafów jest przemienny.
+\end{twr}
+\tab[-0.6cm]\textbf{Dowód}\\
+\tab[0.6cm]Mamy dane dwa grafy $G_1 = (V_1, E_1)$ oraz $G_2=(V_2, E_2)$. Chcemy pokazać, że istnieje izomorfizm między grafami $G_1 \square G_2$ oraz $G_2 \square G_1$.\\
+\tab[0.6cm]Zdefiniujmy zatem następujące odwzorowanie $\varphi : V_1 \times V_2 \rightarrow V_2 \times V_1$, takie że $\varphi(v_1,v_2)=(v_2,v_1)$. Jest ono oczywiście bijekcją, bo jest to iniekcja i suriekcja. Tak więc musimy teraz wykazać, że wierzchołki w grafie $G_1 \square G_2$ są połączone wtedy i tylko wtedy gdy odpowiadające wierzchołki, zgodnie z naszym odwzorowaniem $\varphi$, są połączone w grafie $G_2 \square G_1$. \\
+\tab[0.6cm]Rozważmy dwa połączone wierzchołki $(v_1, v_2)$ oraz $(v_1', v_2')$ grafu $G_1 \square G_2$. Z definicji iloczynu kartezjańskiego wiemy, że $v_1 = v_1'$ i $v_2 v_2' \in E_2$ lub $v_1 v_1' \in E_1 $ i $v_2 = v_2 '$. Załóżmy ze zachodzi pierwszy warunek. Dowód dla drugiego przebiega analogicznie. Możemy zatem zapisać, że wierzchołki $(v_1, v_2)$ oraz $(v_1, v_2')$ są połączone. Zobaczy zatem jak wyglądają ich odwzorowania. Zgodnie z definicją $\varphi(v_1, v_2)=(v_2, v_1)$ oraz $\varphi(v_1, v_2')=(v_2', v_1)$. Tak więc wierzchołki $(v_2, v_1)$ i $(v_2', v_1)$ są połączone w grafie $G_2\square G_1$ ponieważ $v_2 v_2' \in E_2$, co chcieliśmy wykazać.\\
+\tab[0.6cm]Dowód w drugą stronę przebiega analogicznie. Tak więc $\varphi$ jest izomorfizmem, co kończy dowód.
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\begin{twr}
+Graf $K_1$ jest elementem neutralnym iloczynu kartezjańskiego grafów.
+\end{twr}
+\tab[-0.6cm]\textbf{Dowód}\\
+\tab[0.6cm]Rozważmy graf $G=(V, E)$. Będziemy chcięli wykazać, że grafy $G$ oraz $G_1 \square K_1$ są izomorficzne. \\
+\tab[0.6cm]Zdefiniujmy zatem następujące odwzorowanie $\varphi : V \rightarrow V \times \{v'\}$, takie że $\varphi(v) = (v, v')$, gdzie $v'$ jest jedynym wierzchołkiem $K_1$. Odwzorowanie to jest oczywiście bijekcją. Trzeba wykazać że dwa wierzchołki w grafie $G$ są połączone wtedy i tylko wtedy gdy dwa odpowiadające im wierzchołki, zgodnie z naszym odwzorowaniem, są połączone w grafie $G \square K_1$.\\
+\tab[0.6cm]Rozważmy dwa połączone wierzchołki $u$ oraz $v$ w grafie $G$. Z definicji naszego odwzorowania $\varphi (u) = (u, v')$ oraz $\varphi(v) = (v, v')$. Z definicji iloczynu kartezjańskiego wierzchołki $(u, v')$ oraz $(v, v')$ są połączone, co chcieliśmy pokazać.\\
+\tab[0.6cm]Dowód w drugą stronę przebiega analogicznie. Tak więc $\varphi$ jest izomorfizmem, co chcieliśmy wykazać. 
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\begin{twr}
+Iloczyn kartezjański grafów jest łączny.
+\end{twr}
+\textbf{Dowód}\\
+\tab[0.6cm]Rozważmy trzy grafy $G_1 = (V_1, E_1)$, $G_2 = (V_2, E_2)$ oraz $G_3 = (V_3, E_3)$. Będziemy chcięli wykazać, że $(G_1 \square G_2 ) \square G_3 $ i $G_1 \square ( G_2 \square G_3) $ są izomorficzne.\\
+\tab[0.6cm]Na początek dowodu rozważmy iloczyn kartezjański grafów $(G_1 \square G_2 ) \square G_3 $. Krótka analiza, na podstawie definicji iloczynu kartezjańskiego grafów, doprowadzi nas do konkluzji, że wierzchołki $((v_1, v_2), v_3)$ oraz $((v_1', v_2'), v_3')$ są połączone jeżeli $v_1 = v_1'$ i $v_2=v_2'$ i $v_3 v_3' \in E_3$ lub $v_1 = v_1'$ i $v_2 v_2' \in E_2$ i $v_3 = v_3' $ lub $v_1 v_1' \in E_1$ i $v_2=v_2'$ i $v_3= v_3'$. Analogiczny wniosek jest dla grafu $G_1 \square ( G_2 \square G_3) $.\\ 
+\tab[0.6cm]Rozważmy następujące odwzorowanie $\varphi : (V_1 \times V_2 ) \times V_3 \rightarrow V_1 \times (V_2 \times V_3)$, takie że $\varphi ((v_1, v_2), v_3) = (v_1, (v_2, v_3))$. Odwzorowanie to jest oczywiście bijekcją. Musimy więc jeszcze wykazać, że dwa wierzchołki w grafie $(G_1 \square G_2 ) \square G_3 $ są połączone wtedy i tylko wtedy gdy dwa odpowiadające im wierzchołki, zgodnie z naszym odwzorowaniem, są połączone w grafie $G_1 \square ( G_2 \square G_3) $.\\
+\tab[0.6cm]Rozważmy dwa połączone wierzchołki w grafie $(G_1 \square G_2)\square G_3 $. Przyjmijmy, że wierzchołki te można opisać jako $((v_1, v_2), v_3)$ oraz $(v_1, v_2), v_3')$. Pozostałe przypadki, gdy wierzchołki są połączone w grafie $(G_1 \square G_2)\square G_3 $ dowodzi się analogicznie. Z definicji naszego odwzorowania $\varphi ((v_1, v_2), v_3) = (v_1, (v_2, v_3))$ oraz $\varphi ((v_1, v_2), v_3') = (v_1, (v_2, v_3'))$. Tak więc wierzchołki te są połączone w~grafie $G_1 \square (G_2 \square G_3) $ ponieważ, z rozważania na początku dowodu, $v_3 v_3' \in E_3$, co chcieliśmy pokazać.\\
+\tab[0.6cm]Dowód w drugą stronę przebiega analogicznie. Tak więc $\varphi$ jest izomorfizmem, co chcieliśmy wykazać. 
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\tab[0.6cm]Z łączności iloczynu kartezjańskiego można zapisać $G_1 \square G_2 \square ... \square G_k = G$. Wszystkim wierzchołkom grafu można przypisać $k$-elementową listę $(v_1, v_2 , ... v_k )$, gdzie $v_i \in V(G_i)$ dla $1 \leqslant i \leqslant k $. Lista ta będzie odtąd nazywana \textbf{współrzędną wierzchołka} $v$ i będzie służyć do określenia pozycji danego wierzchołka w produkcie. \\
+\tab[0.6cm]Korzystając ze współrzędnych, możemy zdefiniować rzutowanie $p_i : V \rightarrow V_i $ dla $1 \leqslant i \leqslant k $, które dane jest wzorem $p_i (v) = v_i $, gdzie $v_i$ jest i-tym elementem współrzędnych wierzchołka $v$. Wierzchołek $v_i$ grafu $G_i$ będzie i-tą współrzędną wierzchołka $v$. \\
+\tab[0.6cm]Jeżeli w grafie $G$ dany jest wierzchołek $v$ i rozważymy wierzchołki, które różnią się od wierzchołka $v$ tylko na i-tej pozycji, to podgraf indukowany przez te wierzchołki utworzy graf izomorficzny z grafem $G_i$. Podgraf ten będzie nazywany $i$-tą \textbf{warstwą} $G_i$ przechodzącą przez wierzchołek $v$ a jego oznaczeniem będzie $G_i ^v$.\\
+\tab[0.6cm]Niech $v_0$ będzie wyróżnionym wierzchołkiem w grafie $G$. Wierzchołek ten będziemy nazywać \textbf{wierzchołkiem jednostkowym}, natomiast wszystkie warstwy przechodzące przez $v_0$ nazywamy \textbf{warstwami jednostkowymi}. Wierzchołek $v_0$ należy do każdej warstwy jednostkowej, natomiast zbiory $V(G_i ^{v_0}) \setminus \{v_0\}$ są parami rozłączne dla $1 \leqslant i \leqslant k $. Wierzchołek jednostkowy będzie pierwszym wierzchołkiem, od którego będziemy rozpoczynać wszystkie procedury opisane w następnych rozdziałach.\\
+
+\textbf{Faktoryzacja} lub inaczej \textbf{rozkład na czynniki} to proces, którego celem, dla podanego na wejściu obiektu $x$, jest znalezienie takich obiektów, że ich iloczyn jest równy $x$. Obiekty te nazywamy \textbf{czynnikami}. \textbf{Faktoryzacja iloczynu kartezjańskiego grafu} polega zatam na znalezieniu takich grafów, których iloczyn kartezjański jest równy podanemu grafowi. \textbf{ Faktoryzacją prostą iloczynu kartezjańskiego grafu} nazywamy taką faktoryzację, że każdy graf będący czynnikiem jest \textbf{grafem pierwszym}, czyli takim, że nie da się go przedstawić jako iloczynu dwóch nietrywialnych grafów, czyli grafów mających więcej niż jeden wierzchołek. Każdy graf spójny posiada jednoznaczną, z dokładnością do izomorfizmu i kolejności czynników, faktoryzację prostą. Dla grafów niespójnych faktoryzacja ta jest niejednoznaczna~\cite{SAB}~\cite{VIS}.\\
+\tab[0.6cm]Celem naszej pracy jest właśnie znalezienie algorytmu faktoryzacji prostej grafu spójnego. Do tego celu potrzeba nam jeszcze kilku twierdzeń.
 
 \newpage
-\subsection{Kolorowanie właściwe produktu iloczynu kartezjańskiego grafów}
-Rozważmy dwa połączone wierzchołki $u$ oraz $v$ w grafie G. Ponieważ są połączone to ich współrzędne różnią się dokładnie na jednej pozycji. Niech $i$ oznacza tę pozycję. Wtedy krawędź $uv$ należy do $G_i^v$. Zdefiniujmy następującą funkcję $c$ na zbiorze krawędzi $G$. Niech $c(uv) = i$.\\
-Podsumowując: funkcja $c: E(G) \rightarrow \{1,2,...,k\}$ jest kolorowaniem właściwym produktu iloczynu kartezjańskiego, jeżeli $c(uv) = i $ wtedy i tylko wtedy gdy współrzędne wierzchołków $u$ oraz $v$ różnią się na $i$-tej pozycji.\\
-Każda krawędź należy dokładnie do jednej warstwy. Rozważając podgraf grafu $G$ składający się z krawędzi koloru $i$ to każda spójna składowa tego podgrafu będzie oddzielną i-tą warstwą grafu $G$.
-\subsection{Lemat o trójkącie}
-\textit{\textbf{Twierdzenie:} Niech $G$ będzie produktem kartezjańskim grafów $G_1, G_2, ... , G_k$ oraz $c: E(G) \rightarrow \{1,2,...,k\}$ kolorowaniem właściwym produktu iloczynu kartezjańskiego. Wówczas każdy trójkąt w grafie $G$ jest monochromatyczny.}\\
+\subsection{Lematy wykorzystywane w algorytmie faktoryzacji}
+W tym podroździale opiszemy kilka lematów niezbędnych do skonstruowania algorytmu faktoryzaji prostej iloczynu kartezjańskiego grafów.
+\begin{lem}[Lemat o izomorfizmie]
+Niech $G=(V, E)$ będzie spójnym grafem, natomiast $E_1 , E_2 , ... , E_k$ podziałem zbioru krawędzi. Niech każda spójna składowa $(V, \cup_{j \neq i}E_j)$ ma dokładnie jeden punkt wspólny z każdą spójną składową $(V, E_i)$ oraz krawędzie między dwoma składowymi $(V, E_i)$ wyznaczają izomorfizm między tymi składowymi (jeżeli takie krawędzie istnieją). Wtedy: $G=\square_{i=1}^k G_i $ gdzie $G_i $ jest dowolną, spójną składową $(V, E_i)$.
+\end{lem}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\tab[0.6cm]Aby lepiej przedstawić założenia tego lematu posłużymy się przykładem. Rysunek poniżej przedstawia podział zbioru krawędzi na trzy podzbiory. Każdy podzbiór reprezentowany jest przez jeden kolor.
+\begin{figure}[h]
+\centering
+\includegraphics[width = 11cm]{graf1.png}
+\caption{Podział zbioru krawędzi}
+\end{figure}
 \\
-\textit{\textbf{Dowód}}\\
-Niech wierzchołki $v_1, v_2, v_3$ będą parami sąsiednie. Załóżmy, nie wprost, że $i=c(v_1 v_2 ) \neq c(v_2 v_3)=j$. Wówczas współrzędne wierzchołków $v_1$ i $v_2$ różnią się na $i$-tej pozycji natomiast $v_2$ i $v_3$ na $j$-tej pozycji. Tak więc współrzędne $v_1$ oraz $v_3$ różnią się na pozycjach $i$-tej oraz $j$-tej, W takim razie wierzchołki te nie mogą być ze sobą połączone. A więc dochodzimy do sprzeczność.\\
-Na podstawie powyższego lematu stwierdzamy, że każdy kwadrat zawierający co najmniej jedną przekątną jest tego samego koloru.\\
-\subsection{Lemat o kwadracie}
-\textit{\textbf{Twierdzenie:} Niech $c: E(G) \rightarrow {1,2,...,k}$ będzie właściwym kolorowaniem grafu $G$ będącego produktem kartezjańskim. Dane są dwie połączone krawędzie $e$ i $f$ różnych kolorów. Wówczas istnieje dokładnie jeden kwadrat bez przekątnych (graf $C_4$) zawierający $e$ oraz $f$.}\\
+\tab[0.6cm]Rozważmy jedną spójną składową koloru czerwonego oraz spójne składowe złożone z krawędzi koloru innego niż czerwony. Widzimy że każda z nich ma dokładnie jeden punkt wspólny z czerwoną składową. Podobną analizę można przeprowadzić dla każdej spójnej składowej dowolnego koloru.\\
+\begin{figure}[h]
+\centering
+\includegraphics[width = 8.8cm]{izom1.png}
+\caption{Wspólne wierzchołki spójnych składowych}
+\end{figure}
 \\
-\textit{\textbf{Dowód:}}\\
-Przyjmijmy następujące oznaczenia:\\
-$v$- wspólny wierzchołek krawędzi $e$ oraz $f$, $v_e$- drugi koniec $e$, $v_f$- drugi koniec $f$\\
-$(v_0 , v_1, ... ,v_i, ..., v_j,...,v_k )$- współrzędne wierzchołka $v$\\
-$(v_0 , v_1, ... ,v'_i, ..., v_j,...,v_k )$- współrzędne wierzchołka $v_e$\\
-$(v_0 , v_1, ... ,v_i, ..., v'_j,...,v_k )$- współrzędnymi wierzchołka $v_f$\\
-$v'$- wierzchołek o współrzędnych $(v_0 , v_1, ... ,v_i', ..., v'_j,...,v_k )$\\ 
+\tab[0.6cm]Przeanalizujmy teraz dwie spójne składowe czarnego koloru oraz krawędzie między tymi składkowymi, oznaczone zileonym kolorem. Przez określenie, że zielone krawędzie wyznaczają izomorfizm między czarnymi składowymi, rozumiemy, że obrazem danego wierzchołka w izomorfizmie jest drugi  koniec zielonej krawędzi. Analogicznie możemy zbadać dwie dowolne sąsiednie spójne składowe tego samego koloru.
+\begin{figure}[h]
+\centering
+\includegraphics[width = 6.8cm]{izom2.png}
+\caption{Izomorfizm między spójnymi składowymi}
+\end{figure}
 \\
-Łatwo stwierdzić, że wierzchołek $v'$ jest połączony z wierzchołkiem $v_e$ ponieważ ich współrzędne różnią się tylko na pozycji $j$ oraz w grafie $G_j$ istnieje krawędź $v_j v'_j$ ponieważ w grafie $G$ istnieje krawędź $f$. Analogicznie stwierdzamy istnienie krawędzi $v'v_f$, co w połączeniu z faktem, że krawędzie $e$ oraz $f$ są różnego koloru i rozważaniom na temat kwadratów z przekątnymi daje nam tezę lematu. Co więcej na podstawie powyższego rozumowania, można wnioskować że przeciwległe krawędzie w kwadracie mają ten sam kolor, niezależnie czy kwadrat posiada przekątne czy też nie.\\
+\tab[0.6cm]Tak więc ten podział krawędzi spełnia założenia lematu o izomorfizmie, a co za tym idzie nasz graf jest iloczynem grafu $K_2$ (czerwona składowa), $K_2$ (zielona składowa) oraz $C_5$ (czarna składowa). \\
+\tab[0.6cm]Lemat o izomorfizmie pozwala nam na wyciągniecię kilku wniosków. Po pierwsze, jeżeli znajdziemy podział krawędzi spełniający założenia lematu o~izomorfizmie w łatwy sposób jesteśmy w stanie znaleźć rozkład danego grafu. Drugi wniosek jest następujący. Załóżmy, że mamy podany pewien algorytm podziału krawędzi. Nie wiemy jednak czy w trakcie działania algorytmu dopasowanie danej krawędzi do pewnego podzbioru jest prawidłowe. Wówczas w~trakcie działania algorytmu możemy sprawdzić czy podział ten jest odpowiedi, w szczególności, czy izomormizmy między sąsiednimi spójnymi składowymi są zachowane. Aby lepiej to zwizualizować zobaczmy na rysunek poniżej.
+\begin{figure}[h]
+\centering
+\includegraphics[width = 7.8cm]{izom3.png}
+\caption{Zaburzenie izomorfizmu między spójnymi składowymi}
+\end{figure}
+\\
+\tab[0.6cm]Widzimy, że krawędzie zielone nie wyznaczają izomorfizmu między czarnymi składowymi. Mając tę informację możemy dokonywać pewnych modyfikacji naszego algorytmu, aby nasz podział krawędzi znów spełniał założenia lematu o izomorfizmie. Wniosek ten zostanie wykorzystany w rozdziale nazwanym sprawdzanie spójności.\\
+\tab[0.6cm]Wracając do pierwszego wniosku zdefinujemy teraz kolorwanie właściwe iloczynu kartezjańskiego grafów, które jak się okaże będzie spełniało założenia lematu o izomorfizmie.\\
 
-\subsection{Lemat o izomorfizmie}
-\textit{\textbf{Twierdzenie: }Niech $G=(V, E)$ będzie spójnym grafem, natomiast $E_1 , E_2 , ... , E_k$ podziałem zbioru krawędzi. Niech każda spójna składowa $(V, \cup_{j \neq i}E_j)$ ma dokładnie jeden punkt wspólny z każdą spójną składową $(V, E_i)$ oraz krawędzie między dwoma składowymi $(V, E_i)$ wyznaczają izomorfizm między tymi składowymi (jeżeli takie krawędzie istnieją). Wtedy: $G=\Pi G_i $ gdzie $G_i $ jest dowolną, spójną składową $(V, E_i)$.}\\
-\\
-Graf spełnia założenia izomorfizmu, jeżeli spełnia założenia lematu o izomorfizmie. \\
-Niech dwie spójne składowe $C$ i $D$ grafu $(V, E_i)$ będą sąsiednie. Aby sprawdzić czy krawędzie między tymi warstwami indukują izomorfizm wystarczy sprawdzić czy każda krawędź z $C$ i $D$ jest zawarta w jednym kwadracie zawierającym po jednej krawędzi z $C$ i $D$ a dwie pozostałe krawędzie to krawędzie między tymi składowymi. Procedura ta jest podobna jak szukanie kwadratu w poprzednim podrozdziale. Wnioski te będą używane podczas procedury zwanej sprawdzaniem spójności.\\
-\\
-Podrozdział ten zakończymy pewnym sformułowaniem. Generalnie, w naszym algorytmie, nie będziemy opisywać procedury dzielenia krawędzi na podzbiory, lecz wykonywać będziemy procedurę kolorowania. Oczywiście łatwo można stwierdzić, że będą to dla nas procedury równoważne, aczkolwiek nie będziemy już o tym wspominać, tylko korzystać z tego faktu, głównie we wspomnianej już wcześniej procedurze sprawdzania spójności.\\ 
-\subsection{Lemat o udoskonaleniu faktoryzacji iloczynu kartezjańskiego}
-\textit{\textbf{Twierdzenie:} Faktoryzacja prosta danego grafu spójnego jest taka sama lub lepsza niż każda inna faktoryzacja tegoż grafu.}\\
-\\
-Dowód tego twierdzenia wynika wprost z faktu, że każdy graf spójny podsiada jednoznaczną faktoryzację prostą. \\
-\\
-Lemat ten będzie przez nas wykorzystywany w procedurze łączenia kolorów. W algorytmie opisanym w ostatnim rozdziale zakładamy, że faktoryzacja grafu wejściowego będzie się składać z pewnej, oszacowanej przez nas z góry, liczby czynników, co daje nam pewność że uzyskana przez nas finalna faktoryzacją będzie faktoryzacją pierwszą.
+Rozważmy dwa połączone wierzchołki $u$ oraz $v$ w grafie G. Ponieważ są połączone to ich współrzędne różnią się dokładnie na jednej pozycji. Niech $i$~oznacza tę pozycję. Wtedy krawędź $uv$ należy do $G_i^v$. Zdefiniujmy następującą funkcję $c$ na zbiorze krawędzi $G$. Niech $c(uv) = i$.\\
+\tab[0.6cm]Podsumowując: funkcja $c: E(G) \rightarrow \{1,2,...,k\}$ jest \textbf{kolorowaniem właściwym iloczynu kartezjańskiego}, jeżeli $c(uv) = i $ wtedy i tylko wtedy gdy współrzędne wierzchołków $u$ oraz $v$ różnią się na $i$-tej pozycji. Warto zauważyć, że kolorwanie właściwe iloczynu kartezjańskiego nie jest kolorwaniem właściwym mimo iż nazwa może na to wskazywać.\\
+\tab[0.6cm]Każda krawędź należy dokładnie do jednej warstwy. Rozważając podgraf grafu $G$ składający się z krawędzi koloru $i$ to każda spójna składowa tego podgrafu będzie oddzielną i-tą warstwą grafu $G$.\\
+\tab[0.6cm]Pokażemy teraz, że podział krawędzi zgodnie z kolorowaniem właściwym iloczynu kartezjańskiego spełnia założenia lematu o izomorfizmie. Podział ten jest prosty, mianowicie do jednego pozdbioru trafiają krawędzie tego samego koloru. Dowód ograniczymy do grafów spójnych.\\
+\begin{twr}
+Podział krawędzi zgodnie z kolorowaniem właściwym iloczynu kartezjańskiego spełnia założenia lematu o izomorfizmie.
+\end{twr}
+\tab[-0.6cm]\textbf{Dowód}\\
+\tab[0.6cm]Musimy pokazać, że każda spójna składowa danego koloru ma dokładnie jeden punkt wspólny z każda spójną składową złożoną z krawędzi pozostałych kolorów oraz że krawędzie między dwiema warstwami tego samego koloru wyznaczają izomorfizm. Zaczniemy od dowodu pierwszego założenia.\\   
+\tab[0.6cm]Niech graf $G$ będzie iloczynem grafów $G_1, G_2, ..., G_k$. Chcemy pokazać, że dowolna warstwa $G_i$ ma dokładnie jeden punkt wspólny z każdą składową złożoną z krawędzi kolorów różnych od $i$. Niech $G_i ^*$ będzie grafem, będącym iloczynem grafów $G_1, G_2, ..., G_k$ z wyłączeniem grafu $G_i$. Wówczas każda spójna składowa złożona z krawędzi kolorów różnych od $i$ jest izomorficzna do grafu $G_i^*$. Wynika to z faktu, że rozważamy tylko grafy spójne. Idąc dalej wystarczy rozważyć, że graf $G$ jest iloczynem grafów $G_i$ oraz $G_i^*$ i pokazać, że każda warstwa $G_i$ ma dokładnie jeden punkt wspólny z warstwą $G_i^*$. Niech wierzchołek $v$~należy do $G_i$. Wówczas warstwa $G_i^{v*}$ ma dokładnie jeden wierzchołek wspólny z $G_i$. Wynika to z krótkiej analizy współrzędnych względem rozkładu na grafy $G_i$ oraz $G_i^*$. Analizę taką można wykonać dla każdego wierzchołka rozważanej warstwy $G_i$. A co za tym idzie pokazaliśmy, że każda warstwa $G_i$ ma wspólny wierzchołek z każdą spójną składową złożoną z krawędzi kororów różnych od $i$.\\
+\tab[0.6cm]Weźmy teraz pod uwagę dwie sąsiednie warstwy $G_i$. To, że są izomorficzne nie trzeba już udowadniać. Musimy pokazać tylko, że odpowiadające wierzchołki są sąsiednie. A jest tak ponieważ, skoro co najmniej dwa odpowiadające wierzchołki są połączone to wszystkie odpowiadające wierzchołki są połączone. Wynika to z krótkiej analizy współrzędnych.\\
+\tab[0.6cm]Tak więc pokazaliśmy, że podział krawędzi według kolorowania właściwego iloczynu kartezjańskiego spełnia założenia lematu o izomorfizmie.
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\tab[0.6cm]Dzięki temu twierdzeniu wiemy, że wystarczy znaleźć kolorowanie właściwe iloczynu kartezjańskiego. Tak więc aby móc skorzystać w pełni z tego faktu, przedstawimy jeszcze dwa lematy związane z tym kolorowaniem.\\
+ 
+\begin{lem}[Lemat o trójkącie]
+\label{lem:trojkat}
+Niech $G$ będzie produktem kartezjańskim grafów $G_1, G_2, ... , G_k$ oraz $c: E(G) \rightarrow \{1,2,...,k\}$ kolorowaniem właściwym produktu iloczynu kartezjańskiego. Wówczas każdy trójkąt (graf $K_3$) w grafie $G$ jest monochromatyczny.
+\end{lem}
+\tab[-0.6cm]\textbf{Dowód}\\
+\tab[0.6cm]Niech wierzchołki $v_1, v_2, v_3$ będą parami sąsiednie. Załóżmy, nie wprost, że $i=c(v_1 v_2 ) \neq c(v_2 v_3)=j$. Wówczas współrzędne wierzchołków $v_1$ i $v_2$ różnią się na $i$-tej pozycji natomiast $v_2$ i $v_3$ na $j$-tej pozycji. Tak więc współrzędne $v_1$ oraz $v_3$ różnią się na pozycjach $i$-tej oraz $j$-tej, W takim razie wierzchołki te nie mogą być ze sobą połączone. A więc dochodzimy do sprzeczność.\\
+Na podstawie powyższego lematu stwierdzamy, że każdy kwadrat zawierający co najmniej jedną przekątną jest tego samego koloru.
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+\begin{lem}[Lemat o kwadracie]
+Niech $G$ będzie produktem kartezjańskim grafów $G_1, G_2, ... , G_k$ oraz $c: E(G) \rightarrow {1,2,...,k}$ będzie właściwym kolorowaniem grafu $G$ będącego produktem kartezjańskim. Jeżeli istnieją dwie połączone krawędzie $e$ i $f$ różnych kolorów to istnieje dokładnie jeden kwadrat bez przekątnych (graf $C_4$) zawierający $e$ oraz $f$.
+\end{lem}
+\textbf{Dowód}\\
+\tab[0.6cm]Niech $v$ będzie wspólnym wierzchołkiem krawędzi $e$ oraz $f$, $v_e$- drugim końcem $e$, $v_f$- drugim końcem $f$. Niech $(v_0 , v_1, ... ,v_i, ..., v_j,...,v_k )$ będą współrzędnymi wierzchołka $v$, $(v_0 , v_1, ... ,v'_i, ..., v_j,...,v_k )$ współrzędnymi wierzchołka $v_e$ natomiast $(v_0 , v_1, ... ,v_i, ..., v'_j,...,v_k )$ współrzędnymi wierzchołka $v_f$. Wyróżnimy również wierzchołke $v'$ o współrzędnych $(v_0 , v_1, ...,v_i', ..., v'_j,...,v_k )$.\\
+\tab[0.6cm]Łatwo stwierdzić, że wierzchołek $v'$ jest połączony z wierzchołkiem $v_e$ ponieważ ich współrzędne różnią się tylko na pozycji $j$ oraz w grafie $G_j$ istnieje krawędź $v_j v'_j$ ponieważ w grafie $G$ istnieje krawędź $f$. Analogicznie stwierdzamy istnienie krawędzi $v'v_f$, co w połączeniu z faktem, że krawędzie $e$ oraz $f$ są różnego koloru i rozważaniom na temat kwadratów z przekątnymi, z poprzedniego lematu, daje nam tezę. Co więcej na podstawie powyższego rozumowania, można wnioskować że przeciwległe krawędzie w kwadracie mają ten sam kolor, niezależnie czy kwadrat posiada przekątne czy też nie.
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\tab[0.6cm]Lemat o kwadracie jest podstawowym lematem wykorzystywanym w następnym rozdziale o faktoryzacji iloczynu kartezjańskiego z dodatkowymi informacjami. \\
+\tab[0.6cm]Przedstawimy teraz ostati lemat naszego rozdziału.\\
+\begin{lem}[Lemat o udoskonaleniu faktoryzacji] 
+Faktoryzacja prosta danego grafu spójnego jest taka sama lub lepsza niż każda inna faktoryzacja tegoż grafu.
+\end{lem}
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\tab[0.6cm]Przez stwierdzenie, że dana faktoryzacja jest lepsza rozumiemy, że posiada więcej czynników. Dowód tego twierdzenia wynika wprost z faktu, że każdy graf spójny podsiada jednoznaczną faktoryzację prostą. \\
+\tab[0.6cm]Lemat ten będzie przez nas wykorzystywany w procedurze łączenia kolorów. W algorytmie opisanym w szóstym rozdziale zakładamy, że faktoryzacja grafu wejściowego będzie się składać z pewnej, oszacowanej przez nas z góry, liczby czynników, co daje nam pewność, że uzyskana przez nas końcowa faktoryzacją będzie faktoryzacją pierwszą.
 \newpage
 \section{Faktoryzacja z dodatkowymi informacjami}
-W tym rozdziale przedstawimy algorytm kolorowania właściwego grafu względem iloczynu kartezjańskiego, mając podane kolory krawędzi wychodzących z pewnego wierzchołka, względem danego rozkładu grafu. Następnie pokażemy jak mając kolory wszystkich krawędzi nadać współrzędne wierzchołkom. 
+W tym rozdziale przedstawimy algorytm kolorowania właściwego grafu względem iloczynu kartezjańskiego, mając podane kolory krawędzi wychodzących z pewnego wierzchołka. Następnie pokażemy jak mając kolory wszystkich krawędzi nadać współrzędne wierzchołkom. 
 \\
 \subsection{Algorytm kolorowania krawędzi}
 Załóżmy, że mamy dane kolory wszystkich krawędzi, w kolorowaniu iloczynu kartezjańskiego grafu, wychodzących z pewnego wierzchołka $v_0$. Kolorowanie pozostałych krawędzi będzie odbywało się w kolejności przeszukiwania grafu w algorytmie BFS z wierzchołkiem początkowym $v_0$. \\
-\\
-\textit{\textbf{Twierdzenie 3.1:} Niech G=$G_1 \square G_2 \square ... \square G_k$ będzie grafem spójnym. Dane jest kolorowanie właściwe względem podanego rozkładu dla wszystkich krawędzi wychodzących z pewnego wierzchołka $v_0$. Wtedy kolorowanie właściwe produktu kartezjańskiego może być uzyskane zgodnie z kolejnością algorytmu BFS o wierzchołku początkowym $v_0$. Złożoność czasowa tego algorytmu to $\mathcal{O}(mn)$, natomiast złożoność pamięciowa $\mathcal{O}(n^2)$}.\\
-\\
-\textit{\textbf{Dowód}}\\
-Jako dowód przedstawiony zostanie algorytm kolorowania krawędzi. W pierwszym kroku algorytmu dzielimy zbiór wierzchołków grafu $G$ na podzbiory $L_0 , L_1, L_2 , ..., L_r$ w taki sposób, że wierzchołek $v$ należy do zbioru $L_i$ wtedy i tylko wtedy gdy odległość wierzchołka $v$ od wierzchołka $v_0$ jest równa $i$. Zbiory te będziemy nazywać poziomami. Następnie dla każdego wierzchołka, wszystkie krawędzie incydentne z tym wierzchołkiem dzielimy na trzy zbiory- zbiór krawędzi dolnych, poprzecznych i górnych. Definiowanie tych zbirów przebiega następująco. Rozważy poziom $i$, następnie dla wszystkich wierzchołków $v$ należących do zbioru $L_i$ rozważamy krawędzie $vu$ incydentne z $v$. Wówczas jeżeli $u$ należy do $L_{i-1}$ to krawędź $vu$ będzie krawędzią dolną. Jeżeli $u$ należy do $L_i$ wówczas $uv$ będzie krawędzią poprzeczną, jeżeli natomiast $u$ należy do $L_{i+1}$ wówczas $uv$ będzie krawędzią górną wierzchołka warstwy $L_i$. Zauważmy, że krawędzie dolne wierzchołków poziomu $L_{i+1}$ są krawędziami górnymi wierzchołków poziomu $L_{i}$ .\\
-\\
-Nasz algorytm rozpoczynamy od pokolorowania krawędzi poprzecznych $L_1$. Nie stanowi to problemy, ponieważ każdy trójkąt jest monochromatyczny. Tak więc każdej krawędzi $uv$ nadajemy kolor krawędzi $v_0 v$ czyli $c(uv):=c(v v_0 )=c(u v_0 )$.\\
-\\
-Następnie indukcyjnie kolorujemy krawędzie dolne a następnie poprzeczne $L_{i+1}$ mając już pokolorowane krawędzie dolne i poprzeczne $L_i$. Nie ma potrzeby kolorowania krawędzi górnych $L_i$ ponieważ zbiór ten jest również zbiorem krawędzi dolnych $L_{i+1}$.\\
-\\
+\begin{twr}Niech G=$G_1 \square G_2 \square ... \square G_k$ będzie grafem spójnym. Dane jest kolorowanie właściwe względem podanego rozkładu dla wszystkich krawędzi wychodzących z pewnego wierzchołka $v_0$. Wtedy kolorowanie właściwe iloczynu kartezjańskiego może być uzyskane zgodnie z kolejnością algorytmu BFS o wierzchołku początkowym $v_0$. Złożoność czasowa tego algorytmu to $\mathcal{O}(mn)$, natomiast złożoność pamięciowa $\mathcal{O}(n^2)$.
+\end{twr}
+\tab[-0.6cm]\textbf{Dowód}\\
+\tab[0.6cm]Jako dowód przedstawiony zostanie algorytm kolorowania krawędzi. W pierwszym kroku algorytmu dzielimy zbiór wierzchołków grafu $G$ na rozłączne podzbiory $L_0 , L_1, L_2 , ..., L_r$ w taki sposób, że wierzchołek $v$ należy do zbioru $L_i$ wtedy i tylko wtedy gdy odległość wierzchołka $v$ od wierzchołka $v_0$ jest równa $i$. Zbiory te będziemy nazywać \textbf{poziomami}. Następnie dla każdego wierzchołka, wszystkie krawędzie incydentne z tym wierzchołkiem dzielimy na trzy zbiory- \textbf{zbiór krawędzi dolnych, poprzecznych i górnych}. Definiowanie tych zbirów przebiega następująco. Rozważy poziom $i$, następnie dla wszystkich wierzchołków $v$ należących do zbioru $L_i$ rozważamy krawędzie $vu$ incydentne z $v$. Wówczas jeżeli $u$ należy do $L_{i-1}$ to krawędź $vu$ będzie krawędzią dolną. Jeżeli $u$ należy do $L_i$ wówczas $uv$ będzie krawędzią poprzeczną, jeżeli natomiast $u$ należy do $L_{i+1}$ wówczas $uv$ będzie krawędzią górną wierzchołka warstwy $L_i$. Zauważmy, że krawędzie dolne wierzchołków poziomu $L_{i+1}$ są krawędziami górnymi wierzchołków poziomu $L_{i}$ .\\
+
+Nasz algorytm rozpoczynamy od pokolorowania krawędzi poprzecznych $L_1$. Ponieważ każdy trójkąt jest monochromatyczny (patrz lemat \ref{lem:trojkat}) to każdej krawędzi poprzecznej $uv$ nadajemy kolor krawędzi dolych $v_0 v$ oraz $v_0 u$  czyli $c(v v_0 )$.\\
+
+Następnie indukcyjnie kolorujemy krawędzie dolne a następnie poprzeczne warstwy $L_{i+1}$ mając już pokolorowane krawędzie dolne i poprzeczne  warstwy $L_i$. Nie ma potrzeby kolorowania krawędzi górnych $L_i$ ponieważ zbiór ten jest również zbiorem krawędzi dolnych $L_{i+1}$.\\
+
 Zaczynamy od krawędzi dolnych. Przeglądamy wierzchołki należące do $L_{i+1}$ zgodnie z kolejnością wyznaczoną przez algorytm BFS. Niech dany będzie wierzchołek $u$ oraz krawędź $uv$. Ponieważ wierzchołek v należy do $L_i$, gdzie $i\geqslant 1$ to istnieje wierzchołek $w$ należący do $L_{i-1}$ sąsiedni z $v$. Rozważmy dwa przypadki:
 \begin{enumerate}
-\item Nie istnieje wspólny sąsiad wierzchołków $u$ oraz $w$ różny od $v$. Wówczas nie istnieje kwadrat zawierający wierzchołki $u$ oraz $w$ a co za tym idzie kolory krawędzi $uv$ oraz $vw$ są te same czyli $c(uv):=c(vw)$.
-\item Istnieje wspólny sąsiad $x$ wierzchołków $u$ oraz $w$ różny od $v$. W tym przypadku $c(uv):=c(xw)$ oraz $c(ux):=c(vw)$. 
+\item Nie istnieje wspólny sąsiad wierzchołków $u$ oraz $w$ różny od $v$. Wówczas nie istnieje kwadrat zawierający wierzchołki $u$ oraz $w$ a co za tym idzie kolory krawędzi $uv$ oraz $vw$ są te same czyli kolor krawędzi $uv$ będzie taki sam jak kolor krawędzi $vw$.
+\item Istnieje wspólny sąsiad $x$ wierzchołków $u$ oraz $w$ różny od $v$. W tym przypadku krawędź $uv$ otrzymuje kolor krawędzi $wx$, a krawędź $ux$ kolor krawędzi $vw$. 
 \end{enumerate}
 Uzasadnienia w obydwu przypadkach wynikają z lematu o kwadracie.\\
-Rozważmy teraz krawędzie poprzeczne $L_{i+1}$. W tym celu również przeglądamy wierzchołki należące do tego poziomu. Dla każdej krawędzi $uv$ należącej do krawędzi poprzecznych rozważanego poziomu szukamy krawędzi dolnej $uw$ i podobnie jak dla krawędzi dolnych szukamy wspólnego sąsiada wierzchołków $v$ oraz $w$. Jeśli takowy wierzchołek $x$ istnieje wówczas $c(uv):=c(wx)$, jesli nie $c(uv):=c(uw)$.\\
-\\
+\tab[0.6cm]Rozważmy teraz krawędzie poprzeczne $L_{i+1}$. W tym celu również przeglądamy wierzchołki należące do tego poziomu. Dla każdej krawędzi $uv$, należącej do krawędzi poprzecznych rozważanego poziomu, szukamy krawędzi dolnej $uw$ i podobnie jak dla krawędzi dolnych szukamy wspólnego sąsiada wierzchołków $v$ oraz $w$. Jeśli takowy wierzchołek $x$ istnieje wówczas krawędź $uv$ otrzymuje kolor krawędzi $wx$, jesli nie kolor krawędzi $uw$.\\
+
 Zauważmy, że aby wyznaczyć $G_i$ wystarczy znaleźć $G_i ^{v_0}$. Wierzchołek $v$ należy do $V(G_i ^{v_0})$ wtedy i tylko wtedy gdy wszystkie jego krawędzie dolne są koloru $i$. Tak więc aby wyznaczyć $G_i$ wystarczy przejrzeć wszystkie krawędzie dolne wszystkich wierzchołków, jeżeli lista ta jest monochromatyczna wierzchołek ten będzie należał do $V(G_i ^{v_0})$ gdzie $i$ to kolor krawędzi dolnych tego wierzchołka.\\
+
 Rozważając jeszcze raz krawędzie dolne oraz poprzeczne wierzchołków warstw jednostkowych, na podstawie spójności produktu iloczynu kartezjańskiego stwierdzamy, że i krawędzie dolne i krawędzie poprzeczne tychże wierzchołków należą do warstw jednostkowych.\\
+
+Na koniec pozostaje nam wykazać, że nasz algorytm rzeczywiście spełnia założenia dotyczące złożoności pamięciowej i czasowej. Zauważmy że dla każdego wierzchołka należącego do $L_i$, gdzie $i>0$ szukamy dolnego sąsiada, następnie przeglądamy wszystkie krawędzie dolne oraz poprzeczne. Tak więc wykonujemy co najwyżej $2m$ kroków w naszym algorytmie, gdzie $m$ oznacza liczbę krawędzi naszego grafu $G$. Dla ustalonych krawędzi $uv$ oraz $uw$ szukamy wspólnego sąsiada $x$. Mamy co najwyżej $n=G(V)$ możliwości wyboru tego sąsiada. Jeżeli informacje o krawędziach grafu są przetrzymywane w tablicy sąsiedztwa sprawdzenie czy dany wierzchołek jest sąsiadem innego można wykonać w czasie stałym. Tak więc dowiedliśmy, że złożoność czasowa algorytmu to $\mathcal{O}(mn)$. Natomiast złożoność pamięciowa $\mathcal{O}(n^2)$. Zauważmy, że jedyną strukturą danych, którą stworzyliśmy w czasie działania programu są tablice krawędzi dolnych, poprzecznych i górnych. Tak więc całkowity rozmiar tych tablic będzie wynosił $2m$, ponieważ każda krawędź trafi dokładnie do dwóch tablic. Porównując to z wejściowymi strukturami danych, nasza złożoność pamięciowa nie wzrosła, gdyż jest ona ograniczona z góry przez $\mathcal{O}(n^2)$, czyli rozmiar tablicy sąsiedztwa naszego grafu wejściowego. 
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+\newpage
+\tab[0.6cm]Aby lepiej pokazać działanie algorytmu zaprezentujemy przykład. Mamy podany na wejściu graf i kolory wychodzące z wierzchołka początkowego.
+\begin{figure}[h]
+\centering
+\includegraphics[width = 7.5cm]{kol1.png}
+\caption{Graf wejściowy}
+\end{figure}
 \\
-Na koniec pozostaje nam wykazanie, że nasz algorytm rzeczywiście spełnia założenia dotyczące złożoności pamięciowej i czasowej. Zauważmy że dla każdego wierzchołka należącego do $L_i$, gdzie $i>0$ szukamy dolnego sąsiada, następnie przeglądamy wszystkie krawędzie dolne oraz poprzeczne. Tak więc wykonujemy co najwyżej $2m$ kroków w naszym algorytmie, gdzie $m$ oznacza liczbę krawędzi naszego grafu $G$. Dla ustalonych krawędzi $uv$ oraz $uw$ szukamy wspólnego sąsiada $x$. Mamy co najwyżej $n=G(V)$ możliwości wyboru tego sąsiada. Jeżeli informacje o krawędziach grafu są przetrzymywane w tablicy sąsiedztwa sprawdzenie czy dany wierzchołek jest sąsiadem innego można wykonać w czasie stałym. Tak więc dowiedliśmy, że złożoność czasowa algorytmu to $\mathcal{O}(mn)$. Natomiast złożoność pamięciowa $\mathcal{O}(n^2)$. Zauważmy, że jedyną strukturą danych, którą stworzyliśmy w czasie działania programu są tablice krawędzi dolnych, poprzecznych i górnych. Tak więc całkowity rozmiar tych tablic będzie wynosił $2m$, ponieważ każda krawędź trafi dokładnie do dwóch tablic. Porównując to z wejściowymi strukturami danych, nasza złożoność pamięciowa nie wzrosła, gdyż jest ona ograniczona z góry przez $\mathcal{O}(n^2)$, czyli rozmiar tablicy sąsiedztwa naszego grafu wejściowego. \\
+\tab[0.6cm]Nastepnie przechodzimy po wszystkich wierzchołkach zgodnie z kolejnością algorytmu BFS. Jedym kolorem zostały oznaczone wierzchołki tego samego poziomu.
+\begin{figure}[h]
+\centering
+\includegraphics[width = 11.9cm]{kol2.png}
+\caption{Kolejność odwiedzenia wierzchołków}
+\end{figure}
+\\
+\\
+
+Ponieważ nie mamy krawędzi poprzecznych warstwy $L_1$ przechodzimy do kolorowania krawędzi dolych i poprzeczych warstwy $L_2$.
+\begin{figure}[h]
+\centering
+\includegraphics[width = 9cm]{kol3.png}
+\caption{Kolorowanie wierzchołków warstwy $L_2$}
+\end{figure}
+\\
+\tab[0.6cm]Kolorujemy dalej wierzchołki warstwy $L_3$ oraz $L_4$.
+\begin{figure}[h]
+\centering
+\includegraphics[width = 9cm]{kol4.png}
+\caption{Kolorowanie wierzchołków warstwy $L_3$}
+\end{figure}
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\begin{figure}[h]
+\centering
+\includegraphics[width = 10cm]{kol5.png}
+\caption{Kolorowanie wierzchołków warstwy $L_4$}
+\end{figure}
+
+\tab[0.6cm]Procedura naszego kolorowania zakończyła się.
 \subsection{Nadawanie współrzędnych wierzchołkom}
 W poprzednim podrozdziale opisaliśmy algorytm kolorowania krawędzi, jednakże nie podawaliśmy sposobu, jak nadać współrzędne wierzchołkom. Zdefiniujemy teraz algorytm, który nada współrzędne naszym wierzchołkom, mając już dane kolory wszystkich krawędzi.\\
-\\
-\textit{\textbf{Twierdzenie 3.2:} Niech G=$G_1 \square G_2 \square ... \square G_k$ będzie grafem spójnym. Dane jest również kolorowanie właściwe produktu względem podanego rozkładu. Algorytm nadania współrzędnych wierzchołkom może być zrealizowany w złożoności czasowej i pamięciowej $\mathcal{O}(m)$.}\\
-\\
-\textit{\textbf{Dowód}}\\
-Na początku dokonajmy małej obserwacji. Liczba czynników w rozkładzie względem iloczynu kartezjańskiego jest co najwyżej równa minimalnemu stopniowi w gragie wejśiowym $G$. Aby to umotywować wystarczy wspomnieć, że każdy wierzchołek $v$ należy do każdej z warstw $G_1, G_2, ..., G_k$, a co za tym idzie z tego wierzchołka wychodzi co najmniej jedna krawędź każdego koloru. To rozważanie można oczywiście zastosować również do wierzchołka o minimalnym stopniu.\\
+
+\begin{twr}Niech G=$G_1 \square G_2 \square ... \square G_k$ będzie grafem spójnym. Dane jest również kolorowanie właściwe produktu względem podanego rozkładu. Algorytm nadania współrzędnych wierzchołkom może być zrealizowany w złożoności czasowej i pamięciowej $\mathcal{O}(m)$.
+\end{twr}
+\tab[-0.6cm]\textbf{Dowód}\\
+Na początku dokonajmy obserwacji. Liczba czynników w rozkładzie względem iloczynu kartezjańskiego jest co najwyżej równa minimalnemu stopniowi w grafie wejśiowym $G$. Aby to umotywować wystarczy wspomnieć, że każdy wierzchołek $v$ należy do każdej z warstw $G_1, G_2, ..., G_k$, a co za tym idzie z tego wierzchołka wychodzi co najmniej jedna krawędź każdego koloru. To rozważanie można oczywiście zastosować również do wierzchołka o minimalnym stopniu.\\
 Dla każdego wierzchołka, aby móc przechować informację o jego współrzędnych, potrzebujemy $k$- elementowej tablicy. Ponieważ $k$ jest mniejsze od minimalnego stopnia grafu $d_0$ oraz $d_0 \cdot n \leqslant m$ to całkowity rozmiar tablic ze współrzędnymi spełnia nasze założenie o złożoności pamięciowej naszego algorytmu.\\
 Algorytm rozpoczynamy od nadania wierzchołkowi $v_0$ współrzędnych składających się z samych 0. Następnie przeszukujemy wszystkie wierzchołki zgodnie z kolejnością algorytmu BFS. \\Jeżeli wierzchołek należy do $i$-tej warstwy jednostkowej jego wszystkie współrzędne otrzymują wartość 0 z wyłączeniem $i$-tej współrzędnej. Przeszukując wierzchołki $i$-tej warstwy jednostkowej $i$-tej współrzędnej nadajemy kolejną liczbę naturalną. Zapisując formalnie jeżeli nasz wierzchołek $u$ należy do warstwy jednostkowej $u_j =0$ dla $j \neq i$
-oraz $u_i = max\{v_i\}+1$ gdzie $v_i $ to $i$-te współrzędne wierzchołków należących do $G_i$, odwiedzonych wcześniej niż wierzchołek $u$ w algorytmie BFS. 
+oraz $u_i = |max|\{v_i\}+1$ gdzie $v_i $ to $i$-te współrzędne wierzchołków należących do $G_i$, odwiedzonych wcześniej niż wierzchołek $u$ w algorytmie BFS. 
 Jeżeli natomiast wierzchołek nie należy do warstwy jednostkowej to istnieją co najmniej dwie krawędzie dolne tego wierzchołka, mające różne kolory. Niech tym wierzchołkiem będzie $u$ natomiast jego krawędziami dolnymi $uv$ oraz $uw$. Wówczas $u_i = max(v_i , w_i )$ dla $1 \leqslant i \leqslant k$. Tak więc dla pojedynczego wierzchołka wykonamy $k$ operacji, i w zestawieniu z obserwacją na początku tego dowodu, stwierdzamy, że nasza zakładana złożoność obliczeniowa została osiągniętą.
+\begin{flushright}
+$\blacksquare$
+\end{flushright}
+
+Pokażemy na przykładzie jak przebiega nadawanie współrzędnych wierzchołkom. Mamy już kolory wszystkich krawędzi. Zaczynamy od wierzchołka $v_0$ a następnie przechodzimy po pozostałych zgodnie z kolejnością algorytmu BFS. Poniższa tabela przedstawia informację o tym czy dany wierzchołek jest wierzchołkiem jednostkowym oraz jeżeli nie jest, wyróżnionych dwóch sąsiadów których wsółrzędnych używamy do określenia wsółrzędncyh danego wierzchołka. Skorzystamy z przykładu z poprzedniego podroździału.\\
+\begin{figure}[h]
+\centering
+\includegraphics[width = 11.5cm]{kol5.png}
+\caption{Przykładowy graf po skończonym kolorowaniu}
+\end{figure}
+\\
+\begin{tabular}{|c|c|c|c|}\hline
+\textbf{Wierzchołek} & \textbf{Należy do warstwy jednostkowej} & \textbf{Sąsiedzi} & \textbf{Współrzędne} \\ \hline
+0 & Tak &  & (0,0,0)\\ \hline
+1 & Tak &  & (1,0,0)\\ \hline
+2 & Tak &  & (0,1,0)\\ \hline
+3 & Tak &  & (2,0,0)\\ \hline
+4 & Tak &  & (0,0,1)\\ \hline
+5 & Nie & 1, 2 & (1,1,0)\\ \hline
+6 & Tak &  & (3,0,0)\\ \hline
+7 & Nie & 1, 4 & (1,0,1)\\ \hline
+8 & Nie & 2, 3 & (2,1,0)\\ \hline
+9 & Nie & 2, 4 & (0,1,1)\\ \hline
+10 & Nie & 3, 4 & (2,0,1)\\ \hline
+11& Tak &  & (4,0,0)\\ \hline
+12& Nie & 7, 9 & (1,1,1)\\ \hline
+13& Nie & 6, 7 & (3,0,1)\\ \hline
+14& Nie & 5, 6 & (3,1,0)\\ \hline
+15& Nie & 8, 11 & (4,1,0)\\ \hline
+16& Nie &  8, 10& (2,1,1)\\ \hline
+17& Nie & 10, 11 & (4,0,1)\\ \hline
+18& Nie & 12, 14 & (3,1,1)\\ \hline
+19& Nie & 15, 16 & (4,1,1)\\ \hline
+\end{tabular}
 \newpage
 \section{Etykietowanie produktu kartezjańskiego}
-W tym rozdziale rozszerzymy definicję kolorowania i nazwiemy ją etykietowaniem. Wszystkie krawędzie, rzutowane na tą samą krawędź otrzymają tę samą etykietę. Pokażemy, że produkt może być poetykietowany, a co za tym idzie pokolorowany w czasie liniowym. Etykietowanie pozwoli nam na określenie pozycji danej krawędzi w stosunku do faktoryzacji iloczynu kartezjańskiego grafu w czasie stałym. W rozdziale tym opiszemy struktury danych niezbędne do etykietowania krawędzi. Patrząc z punktu widzenia algorytmu, etykietowanie jest pozycją krawędzi w tablicy krawędzi wychodzących z danego wierzchołka o tym samym kolorze. \\
+W tym rozdziale rozszerzymy definicję kolorowania i nazwiemy ją etykietowaniem. Będzie to funckja, która danej krawędzi, po za kolorem, przypisze jeszcze liczbę, która posłuży nam do określenia pozycji tej krawędzi w wykorzystywanych przez nas strukturach danych. Etykietowanie będzie istotne ponieważ pozwoli nam na zmniejszenie złożoności czasowej naszego algorytmu przedstawionego w poprzednim rozdziale. Następnie pokażemy jak pozbyć się tablicy sąsiedztwa aby możliwe było również zmniejszenie złożoności pamięciowej. Na początek jednak opiszemy struktury danych niezbędne do wykonania procedury etykietowania.
 \subsection{Struktury Danych}
 Zauważmy, że używamy współrzędnych wierzchołka do określenia jego pozycji w produkcie iloczynu kartezjańskiego. Całkowita długość tych wektorów jest równa $O(m)$. Przez pozycję krawędzi $uv$ rozumiemy pozycję wierzchołka $u$, kolor krawędzi $uv$ oraz rzutowanie $p_i (uv)$, czyli $p_i(u) p_i(v)$. Krawędź $p_i (uv)$ będziemy nazywać bazą krawędzi $uv$. \\
 Krawędź $uv$ ma ten sam kolor co krawędź $p_i (u)p_i(v)$ oraz tak samo jest krawędzią dolną, poprzeczną lub górną. Poniżej przedstawimy jak efektywnie przetrzymywać informację o bazie. \\
@@ -364,7 +572,7 @@ Generalnie krok naszego algorytmu będzie wyglądał następująco. Sprawdzamy s
 Łatwo można stwierdzić, że nie ma potrzeby przekolorowania krawędzi z niższych warstw. Co więcej nie ma potrzeby jeszcze raz sprawdzania spójności. Wynika to z faktu, że mając mniej kolorów mamy mniej warstw, za to większych. A co za tym idzie, mamy mniej sprawdzania spójności między warstwami a sprawdzenia wykonane wcześniej dla krawędzi są wciąż ważne. \\
 Następnie przechodzimy do sprawdzania spójności dla warstwy $L_{i+1}$. I podobnie jak dla etykietowania, jeżeli nie będziemy mogli przeprowadzić procedury z sukcesem, łączymy kolory. Podobnie jak dla etykietowania, stosując tę samą argumentację nie musimy sprawdzać niższych poziomów po połączeniu kolorów.\\ 
 
-
+\newpage
 \begin{thebibliography}{99}
 \bibitem{AUR} F. Aurenhammer, J. Hagauer, W. Imrich, 
 Cartesian graph factorization at logarithmic cost per edge, Comput. Complexity 2 (1992) 331–349
