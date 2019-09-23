@@ -24,7 +24,7 @@
 \usepackage{color}
 \usepackage{indentfirst}
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
-\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[nottoc]{tocbibind}
 \newtheorem{dfn}{Definicja}
 \newtheorem{twr}{Twierdzenie}
 \newtheorem{lem}[twr]{Lemat}
@@ -90,7 +90,6 @@ Kraków, 2019
 \begin{center}
 \textbf{Oświadczenie studenta}
 \end{center}
-
 Uprzedzony(-a) o odpowiedzialności karnej na podstawie art. 115 ust. 1 i 2 ustawy z dnia
 4 lutego 1994 r. o prawie autorskim i prawach pokrewnych (t.j. Dz.U. z 2018 r. poz.
 1191 z późn. zm.): „Kto przywłaszcza sobie autorstwo albo wprowadza w błąd co do
@@ -119,11 +118,18 @@ przez niego bazach danych, w celu sprawdzania z wykorzystaniem systemu
 antyplagiatowego. Minister właściwy do spraw szkolnictwa wyższego i nauki może
 korzystać z prac dyplomowych znajdujących się w prowadzonych przez niego bazach
 danych w zakresie niezbędnym do zapewnienia prawidłowego utrzymania i rozwoju tych
-baz oraz współpracujących z nimi systemów informatycznych.
-\\
+baz oraz współpracujących z nimi systemów informatycznych.\\
 \begin{flushright}
 ……………………………………………\\
 (czytelny podpis studenta)
+\end{flushright}
+\begin{center}
+\textbf{Oświadczenie promotora}
+\end{center}
+Oświadczam, że praca spełnia wymogi stawiane pracom magisterskim.
+\begin{flushright}
+……………………………………………\\
+(podpis promotora)
 \end{flushright}
 \newpage
 
@@ -132,17 +138,17 @@ baz oraz współpracujących z nimi systemów informatycznych.
 \tab[0.6cm]Pierwszy rozdział zawiera informacje o badaniach iloczynu kartezjańskiego grafów, ze szczególnym uwzględnieniem faktoryzacji iloczynu kartezjańskiego na czynniki pierwsze oraz ogólną koncepcję algorytmu opisanego w pracy. Drugi rozdział to opis podstawowych definicji, związanych z teorią grafów, iloczynem kartezjańskim grafów i jego rozkładem oraz dowody lematów wykorzystywanych w algorytmie. Trzeci rozdział to opis algorytmu kolorowania krawędzi grafu. Czwarty opisuje procedurę etykietowania grafu będącą rozszerzeniem definicji kolorowania, opisanej w rozdziale trzecim. Piąty rozdział to opis procedury nazwanej sprawdzaniem spójności. Następny rozdział opisuje ostateczny algorytm faktoryzacji wykorzystujący, po za wspomnianymi wcześniej procedurami etykietowania i sprawdzania spójności, procedurę łączenia kolorów. Ostatni rozdział to podsumowanie prac.\\
 \tab[0.6cm]\textbf{Abstract}\\
 \tab[0.6cm]Article of Wilffred Imrich and Izotok Peterin from 2007 $"$Recognizing Cartesian product in linear time$"$ was the inspiration and main origin using in this master thesis.\\
-\tab[0.6cm]First chapter maintain information about researches with cartesian product of graph, mainly related with factorisation of cartesian product, and idea of algorith placed in this thesis. Second chapter describe theorems related with graph theory and cartesian product of graphs, also few lemmas, witch are used in our algorithm. Third chapter describe coloring algorithm. Fourth shows labbeling procedure, witch is extension of coloring, described in third chapter. Fifth chapter describe procedure called consistency check. Next chapter is finall algorithm of prime factorisation of cartesian product of graphs witch use also procedure called color merging, beside mention labelling and consistency check. Last chapter is conclusion of whole thesis.\\
+\tab[0.6cm]First chapter maintains information about researches with Cartesian product of graph, mainly related with factorisation of Cartesian product, and idea of algorith placed in this thesis. Second chapter describes theorems related with graph theory and Cartesian product of graphs, also few lemmas, witch are used in our algorithm. Third chapter describes coloring algorithm. Fourth shows labbeling procedure, witch is extension of coloring, described in third chapter. Fifth chapter describes a procedure called consistency check. Next chapter is a finall algorithm of prime factorisation of Cartesian product of graphs witch use also procedure called color merging, beside mention labelling and consistency check. Last chapter is conclusion of whole thesis.\\
 \tab[0.6cm]\textbf{Słowa kluczowe:} graf, iloczyn kartezjański grafów, faktoryzacja iloczynu kartezjańskiego grafów, złożoność pamięciowa, złożoność obliczeniowa, przeszukiwanie grafu wszerz, kolorowanie,
 etykietowanie, sprawdzanie spójności, łączenie kolorów.\\
-\tab[0.6cm]\textbf{Keywords:} graph, cartesian product of graphs, factoring cartesian product of graphs, memory complexity, computational complexity, breadth-first search, coloring,
+\tab[0.6cm]\textbf{Keywords:} graph, Cartesian product of graphs, factoring Cartesian product of graphs, memory complexity, computational complexity, breadth-first search, coloring,
 labelling, consistency check, colors merging.
 \newpage
 \tableofcontents
 \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 \newpage
-\section{Wstęp}
-
+\section*{Wstęp.}
+\addcontentsline{toc}{section}{Wstęp}
 Inspiracją oraz głównym źródłem wykorzystywanym w niniejszej pracy magisterskiej jest artykuł Wilfrieda Imricha oraz Iztoka Peterina z 2007 roku pod tytułem $"$Recognizing Cartesian product in linear time$"$ ~\cite{MAIN}. \\
 
 Iloczyn kartezjański jest powszechny w teorii grafów. Ma on szczególne własności algebraiczne, strukturalne i metryczne. Najbardziej znanymi przykładami są hiperkostki, grafy Hamminga czy kraty. Hiperkostki to potęgi grafu $K_2$, grafy Hamminga to iloczyn grafów pełnych natomiast kraty to iloczyn ścieżek. Iloczyn kartezjański jak i izomorficzne podgrafy tegoż iloczynu mają wiele zastosowań w informatyce, chemii czy biologii.\\
@@ -156,22 +162,22 @@ Praca została podzielona na kilka rozdziałów. Pierwszy, jak można było prze
 Tak jak wspomniano na początku praca ta opiera się na artykule $"$Recognizing Cartesian product in linear time$"$. W ramach prac dokonano translacji tego artykułu, lekko zmieniając jego formę. W ramach pracy twórczej przeprowadzono dowód lematu o trójkącie oraz lematu o kwadracie , wykonano analizę tworzenia tablic inicjalizowanych częściowo oraz dowód liniowej złożoności sprawdzania spójności. Wszystkie przykłady zaprezentowane w pracy również zostały skonstruowane w ramach pracy twórczej.
 \newpage
 
-\section{Wprowadzenie}
+\section{Wprowadzenie.}
 W tym rozdziale opiszemy podstawowe definicje i twierdzenia związane z~tematyką naszej pracy. Zaczniemy od podstawowych definicji z teorii grafów. Następnie przedstawimy algorytm przeszukiwania grafu. W dalszej części przejdziemy do definicji związanych z iloczynem kartezjańskim grafów a na końcu opiszemy kilka lematów wykorzystywanych w następnych rozdziałach.
 \subsection{Graf}
 
 \textbf{Grafem} nazywamy uporządkowaną parę $(V, E)$, gdzie $V$ jest niepustym zbiorem, natomiast $E$ zawiera się w  $P_2 (V)$, gdzie $P_2(V)$ jest zbiorem wszystkich dwuelementowych podzbiorów zbioru $V$. Zbiór $V$ będzie nazywany zbiorem \textbf{wierzchołków}, natomiast $E$ zbiorem \textbf{krawędzi}. \textbf{Rzędem} grafu nazywamy liczbę wierzchołków, natomiast \textbf{rozmiar} grafu to liczba krawędzi. Dla danej krawędzi $\{v_1 , v_2 \}$ mówimy, że wierzchołki $v_1$ oraz $v_2$ są \textbf{końcami} tej krawędzi. Krawędź jest \textbf{incydentna} z wierzchołkiem, jeżeli jest jej końcem. Mówimy, że dwa wierzchołki $v_1, v_2 \in V$ są \textbf{sąsiednie}, jeżeli występuje między nimi krawędź, czyli $\{v_1, v_2\} \in E$.
 Jeżeli zbiór $V$ jest zbiorem skończonym, wówczas mówimy o~\textbf{grafach skończonych}, w przeciwnym przypadku mowa o \textbf{grafach nieskończonych}. W tej pracy skupimy się tylko i wyłącznie na grafach skończonych.\\
-\tab[0.6cm]\textbf{Podgrafem} danego grafu $G$ nazywamy graf, powstały poprzez usunięcie z~grafu $G$ wierzchołków lub krawędzi, przy czym usunięcie wierzchołka powoduje usunięcie wszystkich krawędzi incydentnych z tym wierzchołkiem. \textbf{Podgrafem indukowanym} na zbiorze wierzchołków $V'$ nazywamy podgraf powstały przez usunięcie wszystkich wierzchołków nie należących do $V'$. \\
+\tab[0.6cm]\textbf{Podgrafem} danego grafu $G$ nazywamy graf, powstały poprzez usunięcie z~grafu $G$ wierzchołków lub krawędzi, przy czym usunięcie wierzchołka powoduje usunięcie wszystkich krawędzi incydentnych z tym wierzchołkiem. \textbf{Podgrafem indukowanym} na zbiorze wierzchołków $V'$ nazywamy podgraf powstały przez usunięcie wszystkich wierzchołków nienależących do $V'$. \\
 \tab[0.6cm]Listę $v_1, v_2, ..., v_k$, składającą się z wierzchołków, nazywamy \textbf{ścieżką}, jeżeli dla dowolnego $i \in \{1,2,..., k-1\} $ wierzchołki $v_i$ oraz $v_{i+1}$ są sąsiednie. \textbf{Ścieżka prosta}, to ścieżka, w której dowolny wierzchołek pojawia się maksymalnie jeden raz. Analogicznie definiujemy \textbf{drogę} oraz \textbf{drogę prostą} między wierzchołkami, z tą różnicą, że elementami drogi są krawędzie oraz wierzchołek początkowy jest końcem pierwszej krawędzi w drodze, natomiast wierzchołek końcowy jest końcem ostatniej krawędzi.
 Jeżeli między dwoma wierzchołkami istnieje droga, to \textbf{odległością} między wierzchołkami nazywamy długość najkrótszej drogi między nimi. Jeżeli w grafie, między dwoma dowolnymi wierzchołkami, występuje ścieżka to graf ten nazywamy \textbf{grafem spójnym}. W tej pracy skupimy się wyłącznie na takich grafach.\\
-\tab[0.6cm]\textbf{Stopień wierzchołka} $v$ to ilość krawędzi, incydentnych z danym wierzchołkiem. Oznaczamy go $d(v)$. \\
+\tab[0.6cm]\textbf{Stopień wierzchołka} $v$ to liczba krawędzi, incydentnych z danym wierzchołkiem. Oznaczamy go $d(v)$. \\
 \tab[0.6cm]Z tego, że każda krawędź ma dwa końce można wywnioskować następujący fakt, że w każdym grafie $G=(V,E)$ zachodzi równość:
 \begin{center}$\sum_{v \in V}d(v) = 2|E|$ \end{center}
 Równość ta znana jest jako \textbf{lemat o uścisku dłoni}.\\
 \tab[0.6cm]\textbf{Najmniejszym stopniem wierzchołka w grafie} nazywamy najmniejszy stopień, pośród wszystkich wierzchołków grafu, analogicznie definiujemy \textbf{największy stopień wierzchołka}. \\
 
-Mówimy, że dwa grafy są \textbf{izomorficzne} jeżeli istnieje bijekcja zbioru wierzchołków grafu pierwszego na zbiór wierzchołków grafu drugiego, taka że, jeżeli dwa wierzchołki są połączone w jednym z grafów to i również połączone są dwa odpowiadające im wierzchołki w drugim z grafów. Bijekcję tę nazywamy \textbf{izomorfizmem}. Izomorfizm zachowuje wiele własności grafów, między innymi liczbę wierzchołków i krawędzi, stopnie wierzchołków, spójność. Dlatego często grafy izomorficzne utożsamia się ze sobą.\\
+Mówimy, że dwa grafy są \textbf{izomorficzne} jeżeli istnieje bijekcja zbioru wierzchołków grafu pierwszego na zbiór wierzchołków grafu drugiego, taka że, dwa wierzchołki są połączone w jednym z grafów wtedy i tylko wtedy gdy połączone są dwa odpowiadające im wierzchołki w drugim z grafów. Bijekcję tę nazywamy \textbf{izomorfizmem}. Izomorfizm zachowuje wiele własności grafów, między innymi liczbę wierzchołków i krawędzi, stopnie wierzchołków, spójność. Dlatego często grafy izomorficzne utożsamia się ze sobą.\\
 \subsection{Reprezentacje grafów}
 Przez reprezentację grafu rozumiemy sposób, w jaki jest on przetrzymywany w pamięci. Jest to kluczowe zagadnienie w każdym algorytmie grafowym. Wśród reprezentacji grafów najczęściej rozpowszechnione są \textbf{listy sąsiedztwa} oraz \textbf{tablica sąsiedztwa}.\\
 \tab[0.6cm]Jeżeli chodzi o listy sąsiedztwa, idea polega na tym że każdemu wierzchołkowi przyporządkowujemy listę długości stopnia danego wierzchołka. W liście tej znajdują się wszystkie wierzchołki sąsiadujące z danym wierzchołkiem. Całkowita długość tych list jak i czas potrzebny do inicjalizacji jest zatem proporcjonalny do liczby krawędzi grafu. W przypadku tablicy sąsiedztwa, tworzona jest dwuwymiarowa tablica $n \times n$, gdzie $n$ to rząd grafu. W komórce $(u,v)$ mamy informację czy wierzchołki $u$ oraz $v$ są połączone. W standardowym przypadku, jeżeli w komórce tej istnieje wartość 0 wówczas wierzchołki te są niepołączone, w przeciwnym przypadku widnieje tam wartość 1. Inicjalizacja takiej tablicy oraz ilość pamięci potrzebna do stworzenia takiej tablicy jest proporcjonalna do kwadratu ilości wierzchołków. Tak więc zaletą pierwszej reprezentacji jest mniejsza złożoność czasowa i pamięciowa, jednakże druga reprezentacja pozwala w czasie stałym określić czy dane dwa wierzchołki są połączone, co dla pierwszej reprezentacji, w pesymistycznym przypadku może być wykonane w czasie proporcjonalnym do ilości krawędzi. Stosowanie pierwszej lub drugiej reprezentacji jest zatem zależne od problemu który mamy rozwiązać. W naszej pracy będziemy wykorzystywać obydwie reprezentację aczkolwiek końcowy algorytm będzie korzystał tylko z list sąsiedztwa, co jest wymuszone założeniami o złożoności czasowej i pamięciowej algorytmu faktoryzacji.\\
@@ -352,7 +358,7 @@ $\blacksquare$
 \tab[0.6cm]Przez stwierdzenie, że dana faktoryzacja jest lepsza rozumiemy, że posiada więcej czynników. Dowód tego twierdzenia wynika wprost z faktu, że każdy graf spójny podsiada jednoznaczną faktoryzację prostą. \\
 \tab[0.6cm]Lemat ten będzie przez nas wykorzystywany w procedurze łączenia kolorów. W algorytmie opisanym w szóstym rozdziale zakładamy, że faktoryzacja grafu wejściowego będzie się składać z pewnej, oszacowanej przez nas z góry, liczby czynników, co daje nam pewność, że uzyskana przez nas końcowa faktoryzacją będzie faktoryzacją pierwszą.
 \newpage
-\section{Faktoryzacja z dodatkowymi informacjami}
+\section{Faktoryzacja z dodatkowymi informacjami.}
 W tym rozdziale przedstawimy algorytm kolorowania właściwego grafu względem iloczynu kartezjańskiego, mając podane kolory krawędzi wychodzących z~pewnego wierzchołka. Następnie pokażemy jak mając kolory wszystkich krawędzi nadać współrzędne wierzchołkom. 
 \\
 \subsection{Algorytm kolorowania krawędzi}
@@ -473,7 +479,7 @@ Pokażemy na przykładzie jak przebiega nadawanie współrzędnych wierzchołkom
 19& Nie & 15, 16 & (4,1,1)\\ \hline
 \end{tabular}
 \newpage
-\section{Etykietowanie produktu kartezjańskiego}
+\section{Etykietowanie produktu kartezjańskiego.}
 W tym rozdziale rozszerzymy definicję kolorowania i nazwiemy ją etykietowaniem. Będzie to funkcja, która danej krawędzi, po za kolorem, przypisze jeszcze liczbę, która posłuży nam do określenia pozycji tej krawędzi w wykorzystywanych przez nas strukturach danych. Etykietowanie będzie istotne ponieważ pozwoli nam na zmniejszenie złożoności czasowej naszego algorytmu przedstawionego w poprzednim rozdziale. Następnie pokażemy jak pozbyć się tablicy sąsiedztwa aby możliwe było również zmniejszenie złożoności pamięciowej. Na początek jednak opiszemy struktury danych niezbędne do wykonania procedury etykietowania.
 \subsection{Etykietowanie i struktury danych potrzebne do jego wykonania}
 \tab[0.6cm]We wcześniejszych rozdziałach zdefiniowaliśmy rzutowania $p_i$, które wierzchołkowi grafu $G$, będącemu iloczynem kartezjańskim grafów $G_1, G_2, ..., G_k$ przyporządkowywało wierzchołek grafu $G_i$. Jak pokazaliśmy w poprzednim rozdziale, aby wyznaczyć czynniki wystarczy znaleźć warstwy jednostkowe. Tak więc od tego momentu rzutowania $p_i$ będą zwracały wierzchołki warstw jednostkowych. Wprowadzimy również kolejne rzutowanie, tym razem operujące na zbiorze krawędzi. Dla danej krawędzi $uv$ wynikiem rzutowania $p_i(uv)$ będzie krawędź $p_i(u)p_i(v)$ nazywana odtąd \textbf{bazą} krawędzi $uv$. \\
@@ -518,7 +524,7 @@ $\blacksquare$
 \subsection{Inicjalizowanie częściowe tablicy}
 \tab[0.6cm]W tym podrozdziale zajmiemy się następującym problemem. Chcemy utworzyć tablicę, która będzie wypełniona tylko we wskazanych na początku miejscach. Dokładnie, naszym zadaniem jest utworzenie tablicy o rozmiarze $n$, w której wypełnione będzie dokładnie $d$ elementów (niekoniecznie początkowych i niekoniecznie spójnych). Tak utworzona tablica, w czasie stałym, ma nam dać informację, czy dane pole, o podanym indeksie, zostało zainicjalizowane, i jeśli tak, wskazać jaka wartość kryje się pod tym indeksem.\\
 \tab[0.6cm]Zaczynamy od inicjalizacji pustej tablicy. W tym momencie, pod każdym indeksem w tej tablicy znajdziemy przypadkową wartość. Dokładając nowy element do tablicy wciąż jednak nie mamy informacji, czy element ten jest podaną przez nas wartością, czy jest on od momentu inicjalizacji. Tak więc tworzymy dodatkowy stos, na którym odkładamy indeksy, które zostały przez nas zainicjalizowane. W tym momencie, mamy już informację, które elementy są przez nas dodane a które nie. Jednakże sprawdzenie czy, dany element został przez nas dodany wymaga złożoności czasowej $\mathcal{O}(n)$ w pesymistycznym przypadku. Potrzebna jest więc nam jeszcze jedna struktura. Tworzymy tablicę wskaźników o rozmiarze $n$. Na początku tablica ta zawiera przypadkowe wartości. W momencie dodawania nowego elementu do tablicy początkowej, najpierw umieszczamy indeks na stosie, a następnie dodajemy, do naszej drugiej tablicy, wskaźnik na nowo utworzony element na stosie. Operacja dodawania nowego elementu wykonywana jest w czasie stałym, dostęp do elementu również w takim czasie może być wykonany- sprawdzamy najpierw, czy w tablicy wskaźników element o podanym indeksie wskazuje na zmienną na naszym stosie- jeżeli nie, oznacza to, że nie inicjalizowaliśmy elementu o podanym indeksie. Jeżeli tak, w prosty sposób pobieramy wartość z naszej tablicy początkowej.\\
-\tab[0.6cm]Złożoność pamięciowa naszej operacji to $\mathcal{O}(n)$, gdyż mamy trzy struktury o takiej samej złożoności- tablicę początkową, stos, oraz tablicę wskaźników. Złożoność pamięciowa tej operacji to $\mathcal{O}(d)$, gdzie $d$ oznacza ilość inicjalizowancyh elementów.
+\tab[0.6cm]Złożoność pamięciowa naszej operacji to $\mathcal{O}(n)$, gdyż mamy trzy struktury o takiej samej złożoności- tablicę początkową, stos, oraz tablicę wskaźników. Złożoność pamięciowa tej operacji to $\mathcal{O}(d)$, gdzie $d$ oznacza liczbę inicjalizowancyh elementów.
 
 \subsection{Etykietowanie produktu w czasie liniowym}
 \tab[0.6cm]Dotychczas do sprawdzenia czy dwa wierzchołki są połączone używaliśmy macierzy sąsiedztwa, co wymagało od nas użycia $\mathcal{O}(n^2)$ pamięci, gdzie $n$ oznacza liczbę wierzchołków. Zaburza to nasze założenie o liniowej złożoności pamięciowej naszego algorytmu, co więcej inicjalizacja tej macierzy również może zaburzyć naszą złożoność czasową. Zauważmy jednak, że w każdym kroku naszego algorytmu potrzebujemy co najwyżej jednego wiersza z naszej tabeli sąsiedztwa. A ponieważ nasz graf jest spójny, czyli posiada co najmniej $n-1$ krawędzi, wiersz z macierzy sąsiedztwa nie zaburzy naszej złożoności pamięciowej. Pozostaje problem jak zainicjalizować nasz wiersz w taki sposób, aby sumaryczna inicjalizacja wszystkich wierszy nie zwiększyła złożoności czasowej z $O(m)$ do $O(n^2)$. W tym celu posłużymy się rozwiązaniem zaproponowanym w poprzednim podrozdziale.\\
@@ -627,7 +633,7 @@ Krawędź & Kolor & Numer & Kwadrat bazowy \\ \hline
 \end{tabular}
 \\
 \newpage
-\section{Sprawdzanie spójności}
+\section{Sprawdzanie spójności.}
 Poprzednie rozdziały opierały się na założeniach, że znamy kolory krawędzi wychodzących z pewnego wierzchołka. Następnie etykietowaliśmy pozostałe krawędzie. Odwróćmy teraz trochę sytuację i załóżmy, że mamy dane etykiety pewnych krawędzi wychodzących z danego wierzchołka a naszym zadaniem będzie sprawdzenie, czy dane etykietowanie jest etykietowaniem produktu iloczynu kartezjańskiego według pewnego rozkładu. Jak się okaże w następnym rozdziale, jeżeli podamy złe kolory dla krawędzi wychodzących z wierzchołka $v_0$ nasza procedura etykietowania, może się nie wykonać z pewnych przyczyn. Możliwe jest jednak, że wykona się ona bez problemu nawet, gdy podane kolory będą niepoprawne. W tym celu wracamy do lematu o izomorfiźmie. Naszym zadaniem będzie sprawdzenie, czy na danym etapie, założenia lematu o izomorfizmie, tak aby cały czas mieć pewność, że nasze kolorowanie może być kolorowaniem właściwym produktu iloczynu kartezjańskiego. Procedurę tę będziemy zwać \textbf{sprawdzaniem spójności}.\\
 \tab[0.6cm]Izomorfizm grafów jest bijekcją na zbiorach wierzchołków zachowującą sąsiedztwo. Korzystając z kolejności wierzchołków grafu uzyskaną w algorytmie BFS, będziemy indukcyjnie sprawdzać czy dla danego poziomu $L_i$ nasze założenia są spełnione i dalej kontynuować sprawdzenie dla następnych poziomów. \\
 
@@ -654,7 +660,7 @@ $\blacksquare$
 \end{flushright}
 \newpage
 
-\section{Faktoryzacja poprzez łączenie kolorów}
+\section{Faktoryzacja poprzez łączenie kolorów.}
 W tym rozdziale opiszemy wszystkie konieczne narzędzia potrzebne do faktoryzacji spójnego grafu $G$ na grafy pierwsze, czyli takie które nie da się opisać jako iloczyn dwóch nietrywialnych grafów (przez graf trywialny rozumiemy graf $K_1$). Z lematu o udoskonaleniu chcemy znaleźć końcowy rozkład podanego na wejściu grafu $G$. Przez znalezienie rozkładu rozumiemy znalezienie ostatecznego kolorowania właściwego produktu iloczynu kartezjańskiego. \\
 \tab[0.6cm]Algorytm przedstawiony w tym rozdziale będzie opierał się na algorytmie etykietowania. Zostanie on jednak rozszerzony o dwie procedury. Po pierwsze dla każdego poziomu będziemy sprawdzali czy zostały zachowane założenia lematu o izomorfizmie. Do tego celu posłuży nam sprawdzanie spójności. Druga procedura będzie zwana \textbf{łączeniem kolorów}. Dotychczas zakładaliśmy, że znamy kolory krawędzi wychodzących z wierzchołka początkowego. Oczywiście teraz już tego założenia nie ma. Jak więc będzie wyglądać nasza procedura? Każdej krawędzi incydentnej z wierzchołkiem początkowym nadamy inny kolor. Dzięki temu zabiegowi wiemy, że nie pominiemy żadnego koloru ponieważ każdy wierzchołkiem ma krawędzie incydentne każdego koloru. Może się jednak okazać, że kolorowanie właściwe iloczynu kartezjańskiego będzie miało mniej kolorów. Wówczas właśnie dochodzi do łączenia kolorów. Pokażemy zatem jak przebiega algorytm faktoryzacji prostej grafu. 
 \\
@@ -727,7 +733,8 @@ Na koniec, tak jak to było w poprzednich rozdziałach przedstawimy algorytm fak
 \caption{Kolorowanie właściwe iloczynu kartezjańskiego grafu}
 \end{figure}
 \newpage
-\section{Podsumowanie}
+\section*{Podsumowanie.}
+\addcontentsline{toc}{section}{Podsumowanie}
 Celem naszej pracy było znalezienie liniowego algorytmu faktoryzacji iloczynu kartezjańskiego grafu spójnego, zarówno jeżeli chodzi o złożoność czasową jak i pamięciową. Dla grafów, w ogólnym przypadku, złożoność liniowa jest determinowana przez liczbę krawędzi. Założony przez nas cel został osiągnięty. Przedstawiliśmy wszystkie struktury i poszczególne kroki algorytmu wraz z uzasadnieniem poprawności działania.\\
 \tab[0.6cm]Nasuwa się pytanie, czy jesteśmy w stanie poprawić działanie naszego algorytmu. W ogólnym przypadku nie. Założona przez nas złożoność nie może już być poprawiona z uwagi na dane początkowe. Zakładaliśmy, że na wejściu posiadamy graf. Aby móc przetrzymywać graf w pamięci musimy liczyć się oczywiście z tym, że mamy informację o każdej krawędzi, a co za tym idzie, złożoność pamięciowa każdego algorytmu faktoryzacji iloczynu kartezjańskiego jest co najmniej taka sama jak złożoność naszego algorytmu. Podobnie ma się sprawa ze złożonością czasową. Sama inicjalizacja grafu jest liniowa, czyli taka sama jak złożoność przedstawiona w tej pracy.\\
 \tab[0.6cm]Oczywiście dalsze prace nad faktoryzacją mogą być prowadzone. Dla przykładu nasz algorytm można uprościć dla grafów gęstych, czyli takich, w których liczba krawędzi jest proporcjonalna do kwadratu liczby wierzchołków, czy dla grafów z ograniczonym stopniem maksymalnym. Uproszczenie to polega na rezygnacji z kroku algorytmu opisanego w rozdziale 4.4. Celem tego rozdziału było pozbycie się tablicy sąsiedztwa i zastąpienie jej strukturami pomocniczymi, tak aby cały czas móc w stanie określić czy dwa wierzchołki są sąsiednie. W przypadku grafów gęstych tablica sąsiedztwa nie zaburza złożoności pamięciowej, natomiast dla grafów z ograniczonym stopniem maksymalnym można tego dokonać korzystając wyłącznie z list sąsiedztwa. Operacje te jednak nie zmniejsza złożoności, lecz upraszczają sam algorytm.\\
@@ -737,28 +744,28 @@ Celem naszej pracy było znalezienie liniowego algorytmu faktoryzacji iloczynu k
 \newpage
 \begin{thebibliography}{99}
 \bibitem{AUR} F. Aurenhammer, J. Hagauer, W. Imrich, 
-Cartesian graph factorization at logarithmic cost per edge, Comput. Complexity 2 (1992) 331–349
+Cartesian graph factorization at logarithmic cost per edge, Comput. Complexity 2 (1992) 331–349.
 
 \bibitem{FED} T. Feder, 
 Product graph representations, J. Graph Theory 16 (1992) 467–488.
 
 \bibitem{FEI} J. Feigenbaum, J. Hershberger, A.A. Schäffer, 
-A polynomial time algorithm for finding the prime factors of Cartesian-product graphs, Discrete Appl. Math. 12 (1985) 123–138
+A polynomial time algorithm for finding the prime factors of Cartesian-product graphs, Discrete Appl. Math. 12 (1985) 123–138.
 
 \bibitem{MAIN} W. Imrich, I. Peterin, 
-Recognizing Cartesian product in linear time / Discrete Mathematics 307 (2007) 472 – 483
+Recognizing Cartesian product in linear time / Discrete Mathematics 307 (2007) 472 – 483.
 
 \bibitem{IMR} W. Imrich, S. Klavžar, 
-Product Graphs: Structure and Recognition, Wiley, New York, 2000
+Product Graphs: Structure and Recognition, Wiley, New York, 2000.
 
 \bibitem{SAB} G. Sabidussi,
 Graph multiplication, Math. Z. 72 (1960) 446–457.
 
-\bibitem{VIS2} V.G. Vizing, 
-Some unsolved problems in graph theory, Russian Math. Surveys 23 (1968) 125–141.
-
 \bibitem{WIN} P.M. Winkler, 
-Factoring a graph in polynomial time, European J. Combin. 8 (1987) 209–212
+Factoring a graph in polynomial time, European J. Combin. 8 (1987) 209–212.
+
+\bibitem{VIS2} V.G. Wizing, 
+Some unsolved problems in graph theory, Russian Math. Surveys 23 (1968) 125–141.
 
 \bibitem{VIS} V.G. Wizing,
 The Cartesian product of graphs (Russian), Vycisl. Systemy 9 (1963) 30–43, English translation in Comput. Electron Syst. 2 (1966) 352–365.
